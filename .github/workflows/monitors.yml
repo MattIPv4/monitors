@@ -18,7 +18,10 @@ jobs:
 
     - name: Set Node.js version from .nvmrc
       id: set-node
-      run: echo "::set-output name=node::$(cat .nvmrc)"
+      run: |
+        NODE=$(cat .nvmrc)
+        echo $NODE
+        echo "::set-output name=node::$NODE"
 
     - name: Use Node.js
       uses: actions/setup-node@v2
@@ -45,7 +48,7 @@ jobs:
     - name: Display outputs
       run: |
         echo ${{ steps.set-node.outputs.node }}
-        echo ${{ needs.locate.outputs.matrix }}
+        echo ${{ steps.set-matrix.outputs.matrix }}
 
   monitor:
     needs: locate
