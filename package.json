@@ -1,0 +1,14 @@
+{
+  "name": "monitors",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "zombie": "^6.1.4"
+  }
+}
