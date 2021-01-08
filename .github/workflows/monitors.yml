@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
       node: ${{ steps.set-node.outputs.node }}
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
 
     steps:
     - uses: actions/checkout@v2
@@ -32,10 +32,11 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-
 
-    - name: Install dependencies
+    - name: Install NPM dependencies
       run: npm ci
 
-    - name: Get monitors
+    - name: Set job matrix from located monitors
+      id: set-matrix
       run: |
         MONITORS=$(npm run locate)
         echo $MONITORS
@@ -43,7 +44,7 @@ jobs:
 
     - name: Display outputs
       run: |
-        echo ${{ needs.locate.outputs.node }}
+        echo ${{ steps.set-node.outputs.node }}
         echo ${{ needs.locate.outputs.matrix }}
 
   monitor:
