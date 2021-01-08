@@ -1,6 +1,6 @@
 const monitorName = process.argv[2];
 
-const getMonitor = name => require(`./monitors/${name}.js`);
+const getMonitor = name => require(`../monitors/${name}.js`);
 
 const error = (msg, err) => {
     console.error(msg);

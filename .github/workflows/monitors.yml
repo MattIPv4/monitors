@@ -6,20 +6,57 @@ on:
     - cron: '*/15 * * * *'
 
 jobs:
-  personal-website:
+  locate:
+    runs-on: ubuntu-latest
+
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      node: ${{ steps.set-node.outputs.node }}
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set Node.js version from .nvmrc
+      id: set-node
+      run: echo "::set-output name=node::$(cat .nvmrc)"
+
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ steps.set-node.outputs.node }}
+
+    - uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Get monitors
+      run: |
+        MONITORS=$(npm run locate)
+        echo $MONITORS
+        echo "::set-output name=matrix::{\"monitor\":$MONITORS}"
+
+  monitor:
+    needs: locate
+
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.locate.outputs.matrix) }}
+
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
 
-    - name: Read .nvmrc
-      run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
-      id: nvm
-
-    - name: Use Node.js (.nvmrc)
+    - name: Use Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: "${{ steps.nvm.outputs.NVMRC }}"
+        node-version: ${{ needs.locate.outputs.node }}
 
     - uses: actions/cache@v2
       with:
@@ -32,32 +69,4 @@ jobs:
       run: npm ci
 
     - name: Run monitor
-      run: npm start -- personal-website
-
-  botblock:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Read .nvmrc
-      run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
-      id: nvm
-
-    - name: Use Node.js (.nvmrc)
-      uses: actions/setup-node@v2
-      with:
-        node-version: "${{ steps.nvm.outputs.NVMRC }}"
-
-    - uses: actions/cache@v2
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-
-    - name: Install dependencies
-      run: npm ci
-
-    - name: Run monitor
-      run: npm start -- botblock
+      run: npm run monitor -- ${{ matrix.monitor }}

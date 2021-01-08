@@ -2,9 +2,10 @@
   "name": "monitors",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/locate.js",
   "scripts": {
-    "start": "node index.js"
+    "locate": "node src/locate.js",
+    "monitor": "node src/monitor.js"
   },
   "author": "",
   "license": "ISC",
