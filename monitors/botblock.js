@@ -17,6 +17,3 @@ module.exports = () => Promise.all([
         });
     }),
 ]);
-
-
-
