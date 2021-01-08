@@ -15,7 +15,6 @@
     "is-port-reachable": "^3.0.0",
     "mysql": "^2.18.1",
     "node-fetch": "^2.6.1",
-    "puppeteer": "^5.5.0",
-    "zombie": "^6.1.4"
+    "puppeteer": "^5.5.0"
   }
 }
