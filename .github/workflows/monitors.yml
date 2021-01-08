@@ -41,6 +41,11 @@ jobs:
         echo $MONITORS
         echo "::set-output name=matrix::{\"monitor\":$MONITORS}"
 
+    - name: Display outputs
+      run: |
+        echo ${{ needs.locate.outputs.node }}
+        echo ${{ needs.locate.outputs.matrix }}
+
   monitor:
     needs: locate
 
