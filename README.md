@@ -20,6 +20,9 @@ This job uses the set Node.js version from the `locate` job as well, installing 
 The script that runs the specified monitor in the Actions job is [`src/monitor.js`](src/monitor.js).
 This script will locate and execute the given monitor, outputting if it passed or failed, along with the appropriate exit code.
 
+*If you need to run all monitors locally, install `jq` and then use `npm run all`.
+A single monitor can be run in the same way the Actions workflow executes it, with `npm run monitor -- {{monitor_name}}`.*
+
 ## License
 
 This project is licensed under [Apache 2.0](LICENSE).

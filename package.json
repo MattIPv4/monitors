@@ -6,7 +6,8 @@
   "main": "src/locate.js",
   "scripts": {
     "locate": "node src/locate.js",
-    "monitor": "node src/monitor.js"
+    "monitor": "node src/monitor.js",
+    "all": "npm run locate | jq -r '.[]' | xargs -L 1 npm run monitor --"
   },
   "author": "Matt (IPv4) Cowley",
   "license": "Apache-2.0",
