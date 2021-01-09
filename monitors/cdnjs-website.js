@@ -12,9 +12,9 @@ module.exports = async () => {
 
     // Unselect & reselect the search box
     await page.click('.landing');
-    await new Promise(resolve => setTimeout(resolve, 250));
+    await new Promise(resolve => setTimeout(resolve, 500));
     await page.click('.landing .ais-SearchBox-input');
-    await new Promise(resolve => setTimeout(resolve, 250));
+    await new Promise(resolve => setTimeout(resolve, 500));
 
     // Ensure the search box shows some hits
     const hits = await page.$('.landing .ais-Hits');
