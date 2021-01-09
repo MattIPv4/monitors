@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 const assert = require('assert').strict;
-const fetch = require('node-fetch');
+const fetchJson = require('../utils/fetch-json');
 
 module.exports = () => Promise.all([
     (async () => {
@@ -14,12 +14,5 @@ module.exports = () => Promise.all([
 
         await browser.close();
     })(),
-    (async () => {
-        const res = await fetch('https://botblock.org/api/lists');
-        if (!res.ok) throw new Error(`HTTP request failed: ${res.status} ${res.statusText}`);
-
-        const data = await res.json();
-        if (data === null || typeof data !== 'object')
-            throw new Error(`Unexpected endpoint response: ${JSON.stringify(data)}`);
-    })(),
+    fetchJson('https://botblock.org/api/lists'),
 ]);
