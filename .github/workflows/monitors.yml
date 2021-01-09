@@ -3,7 +3,7 @@ name: Monitors
 on:
   push:
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '*/5 * * * *'
 
 jobs:
   locate:

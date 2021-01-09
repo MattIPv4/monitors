@@ -4,7 +4,7 @@
 
 Uptime monitoring (or really any monitoring that can throw an error) through Node.js & GitHub Actions.
 
-Add files to the [`monitors`](monitors) directory and they'll be run every 15 minutes by GitHub Actions.
+Add files to the [`monitors`](monitors) directory and they'll be run every 5 minutes (ish) by GitHub Actions.
 Any monitor that throws an error will fail and will be reported as a failed job in Actions.
 
 The GitHub Actions workflow has two defined steps, though the second is dynamic and dictated by the output of the first.
