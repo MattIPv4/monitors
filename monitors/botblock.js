@@ -10,7 +10,7 @@ module.exports = () => Promise.all([
 
         // Check the heading is there
         const heading = await page.$eval('.hero h1', e => e.textContent);
-        assert.equal(heading.trim().replace(/(\s){2,}/g, '$1'), 'Discord Bot Lists? We have them all.');
+        assert.equal(heading.trim(), 'Discord Bot Lists? We have them all.');
 
         await browser.close();
     })(),

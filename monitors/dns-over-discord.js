@@ -1,9 +1,3 @@
-const fetchUncached = require('../utils/fetch-uncached');
+const fetchHealth = require('../utils/fetch-health');
 
-module.exports = async () => {
-    const res = await fetchUncached('https://dns-over-discord.v4.wtf/health');
-    if (!res.ok) throw new Error(`HTTP request failed: ${res.status} ${res.statusText}`);
-
-    const text = await res.text();
-    if (text !== 'OK') throw new Error(`Unexpected health check response: ${text}`);
-};
+module.exports = fetchHealth('https://dns-over-discord.v4.wtf/health');
