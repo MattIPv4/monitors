@@ -25,6 +25,16 @@ const runMonitor = async (name, func) => {
     try {
         await func();
         consola.success('Passed!');
+        return;
+    } catch (err) {
+        consola.warn('Failed to run');
+        consola.warn(err);
+    }
+
+    consola.info(`Rerunning monitor ${name}...`);
+    try {
+        await func();
+        consola.success('Passed!');
     } catch (err) {
         return error('Failed to run', err);
     }
