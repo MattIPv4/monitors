@@ -12,15 +12,21 @@ module.exports = async () => {
 
     // Unselect & reselect the search box
     await page.click('.landing');
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise(resolve => setTimeout(resolve, 250));
     await page.click('.landing .ais-SearchBox-input');
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise(resolve => setTimeout(resolve, 750));
 
     // Ensure the search box shows some hits
-    const hits = await page.$('.landing .ais-Hits');
-    assert.notEqual(hits, null);
-    const hitsBox = await hits.boundingBox();
-    assert.notEqual(hitsBox, null);
+    try {
+        const hits = await page.$('.landing .ais-Hits');
+        assert.notEqual(hits, null);
+        const hitsBox = await hits.boundingBox();
+        assert.notEqual(hitsBox, null);
+    } catch (e) {
+        // This isn't working reliably, screenshot to debug
+        console.log(await page.screenshot({ fullPage: true, encoding: 'base64' }));
+        throw e;
+    }
 
     await browser.close();
 };
