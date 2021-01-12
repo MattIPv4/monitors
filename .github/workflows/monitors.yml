@@ -7,7 +7,7 @@ on:
 
 jobs:
   locate:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     outputs:
       node: ${{ steps.set-node.outputs.node }}
@@ -57,7 +57,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJson(needs.locate.outputs.matrix) }}
 
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
     - uses: actions/checkout@v2
