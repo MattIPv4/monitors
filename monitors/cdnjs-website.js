@@ -6,6 +6,15 @@ module.exports = async () => {
     const page = await browser.newPage();
     await page.goto('https://cdnjs.com');
 
+    page.on('console', msg =>
+        console.log('Console:', `${msg.type()} ${msg.text()}`));
+    page.on('error', err =>
+        console.log('Error:', err));
+    page.on('pageerror', pageerr =>
+        console.log('Page error:', pageerr));
+    page.on('requestfailed', request =>
+        console.log('Request failed:', `${request.failure().errorText} ${request.url()}`));
+
     try {
         // Check the heading is there
         const heading = await page.$eval('.landing h1', e => e.textContent);
