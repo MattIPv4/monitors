@@ -3,11 +3,11 @@ name: Monitors
 on:
   push:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '*/5 * * * *' # Yes, this is very frequent, but GitHub Actions doesn't actually trigger it this often
 
 jobs:
   locate:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     outputs:
       node: ${{ steps.set-node.outputs.node }}
@@ -57,7 +57,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJson(needs.locate.outputs.matrix) }}
 
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
