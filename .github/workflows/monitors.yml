@@ -2,8 +2,9 @@ name: Monitors
 
 on:
   push:
-  schedule:
-    - cron: '*/5 * * * *' # Yes, this is very frequent, but GitHub Actions doesn't actually trigger it this often
+#  schedule:
+#    - cron: '*/5 * * * *'
+  workflow_dispatch:
 
 jobs:
   locate:
