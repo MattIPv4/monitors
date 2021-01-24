@@ -1,7 +1,4 @@
-const fetchJson = require('../utils/fetch-json');
+const api = require('../utils/cdnjs/api');
 
-module.exports = () => Promise.all([
-    fetchJson('https://api.cdnjs.com/libraries'),
-    fetchJson('https://api.cdnjs.com/libraries/vue'),
-    fetchJson('https://api.cdnjs.com/libraries/vue/tutorials'),
-]);
+module.exports = () => api('api.cdnjs.com');
+
