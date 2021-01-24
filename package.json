@@ -13,6 +13,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "consola": "^2.15.0",
+    "gunzip-maybe": "^1.4.2",
     "is-port-reachable": "^3.0.0",
     "mysql": "^2.18.1",
     "node-fetch": "^2.6.1",
