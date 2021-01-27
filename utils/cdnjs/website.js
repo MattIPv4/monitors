@@ -20,9 +20,11 @@ module.exports = async host => {
         const heading = await page.$eval('.landing h1', e => e.textContent);
         assert.equal(heading.trim().replace(/(\s){2,}/g, '$1'), 'Simple. Fast. Reliable. Content delivery at its finest.');
 
-        // Unselect & reselect the search box
-        await page.click('.landing');
+        // Click on something other than the search box
+        await page.click('.landing h1');
         await new Promise(resolve => setTimeout(resolve, 750));
+
+        // Click back on the search box to trigger hits to show
         await page.click('.landing .ais-SearchBox-input');
         await new Promise(resolve => setTimeout(resolve, 750));
 
