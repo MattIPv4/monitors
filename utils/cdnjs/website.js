@@ -23,8 +23,12 @@ module.exports = async host => {
         // Click on something other than the search box
         await page.click('.landing h1');
         await new Promise(resolve => setTimeout(resolve, 750));
+        await page.click('.landing h1');
+        await new Promise(resolve => setTimeout(resolve, 750));
 
         // Click back on the search box to trigger hits to show
+        await page.click('.landing .ais-SearchBox-input');
+        await new Promise(resolve => setTimeout(resolve, 750));
         await page.click('.landing .ais-SearchBox-input');
         await new Promise(resolve => setTimeout(resolve, 750));
 
