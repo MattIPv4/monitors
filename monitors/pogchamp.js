@@ -10,7 +10,7 @@ module.exports = () => Promise.all([
         try {
             // Check the heading is there
             const heading = await page.$eval('#title', e => e.textContent);
-            assert.equal(heading.trim(), 'PogChampoftheDay');
+            assert.equal(heading.trim(), 'YournewPogChampis...');
 
             // Wait for the animation to do its thing
             await new Promise(resolve => setTimeout(resolve, 10000));
@@ -21,7 +21,7 @@ module.exports = () => Promise.all([
             const finalHeadingBox = await finalHeading.boundingBox();
             assert.notEqual(finalHeadingBox, null);
             const finalHeadingText = await page.evaluate(e => e.textContent, finalHeading);
-            assert.equal(finalHeadingText.trim(), 'PogChampoftheDay');
+            assert.equal(finalHeadingText.trim(), 'YournewPogChampis...');
 
             // Try to find the final pog image, check its contents and visible
             const finalImg = await page.$('#content img');
