@@ -6,6 +6,7 @@
   "main": "src/locate.js",
   "scripts": {
     "locate": "node src/locate.js",
+    "disabled": "node src/disabled.js",
     "monitor": "node src/monitor.js",
     "all": "npm run locate | jq -r '.[]' | xargs -L 1 npm run monitor --"
   },

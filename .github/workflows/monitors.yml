@@ -12,6 +12,7 @@ jobs:
 
     outputs:
       node: ${{ steps.set-node.outputs.node }}
+      disabled: ${{ steps.set-disabled.outputs.disabled }}
       matrix: ${{ steps.set-matrix.outputs.matrix }}
 
     steps:
@@ -39,6 +40,13 @@ jobs:
     - name: Install NPM dependencies
       run: npm ci
 
+    - name: Set disabled monitors list
+      id: set-disabled
+      run: |
+        DISABLED=$(npm run disabled)
+        echo $DISABLED
+        echo "::set-output name=disabled::$DISABLED"
+
     - name: Set job matrix from located monitors
       id: set-matrix
       run: |
@@ -61,6 +69,8 @@ jobs:
     runs-on: ubuntu-latest
 
     timeout-minutes: 5
+
+    if: ${{ !contains(fromJson(needs.locate.outputs.disabled), matrix.monitor) }}
 
     steps:
     - uses: actions/checkout@v2
