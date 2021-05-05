@@ -70,8 +70,6 @@ jobs:
 
     timeout-minutes: 5
 
-    if: ${{ !contains(fromJson(needs.locate.outputs.disabled), matrix.monitor) }}
-
     steps:
     - uses: actions/checkout@v2
 
@@ -91,4 +89,5 @@ jobs:
       run: npm ci
 
     - name: Run monitor
+      if: ${{ !contains(fromJson(needs.locate.outputs.disabled), matrix.monitor) }}
       run: npm run monitor -- ${{ matrix.monitor }}
