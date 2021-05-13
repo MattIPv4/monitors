@@ -12,12 +12,12 @@ module.exports = async () => {
         assert.equal(heading.trim(), 'NGINXConfig');
 
         // Check a button in the tool works
-        const [ button ] = await page.$x('//a[text()="Routing"]');
+        const [ button ] = await page.$x('//a[contains(text(), "Routing")]');
         assert.notEqual(button, null);
         await button.click();
 
         // Look for the routing content and check its now visible
-        const [ label ] = await page.$x('//label[text()="Fallback routing"]');
+        const [ label ] = await page.$x('//label[contains(text(), "Fallback routing")]');
         assert.notEqual(label, null);
         const labelBox = await label.boundingBox();
         assert.notEqual(labelBox, null);
