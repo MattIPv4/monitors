@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 
 module.exports = url => {
     const controller = new AbortController();
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
         controller.abort()
     }, 30000);
 
@@ -13,5 +13,8 @@ module.exports = url => {
             'Cache': 'no-cache',
             'Cache-Control': 'no-cache',
         },
+    }).then(res => {
+        clearTimeout(timeout);
+        return res;
     });
 };
