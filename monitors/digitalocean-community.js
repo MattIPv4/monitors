@@ -6,10 +6,11 @@ module.exports = () => Promise.all([
     fetchHealth('https://www.digitalocean.com/community/health'),
     (async () => {
         const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-        await page.goto('https://www.digitalocean.com/community');
 
         try {
+            const page = await browser.newPage();
+            await page.goto('https://www.digitalocean.com/community');
+
             // Check the heading is there
             const heading = await page.$eval('.hero h2', e => e.textContent);
             assert.equal(heading.trim().replace(/(\s){2,}/g, '$1'), 'Developers supporting developers');
@@ -27,10 +28,11 @@ module.exports = () => Promise.all([
     })(),
     (async () => {
         const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-        await page.goto('https://www.digitalocean.com/community/tutorials/react-axios-react');
 
         try {
+            const page = await browser.newPage();
+            await page.goto('https://www.digitalocean.com/community/tutorials/react-axios-react');
+
             // Check the image is there
             const image = await page.$('.tutorial-image');
             assert.notEqual(image, null);
@@ -59,10 +61,11 @@ module.exports = () => Promise.all([
     })(),
     (async () => {
         const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-        await page.goto('https://www.digitalocean.com/community/questions/ubuntu-16-04-creating-new-user-and-adding-ssh-keys');
 
         try {
+            const page = await browser.newPage();
+            await page.goto('https://www.digitalocean.com/community/questions/ubuntu-16-04-creating-new-user-and-adding-ssh-keys');
+
             // Check the heading is there
             const heading = await page.$eval('.question-header h1.content-title', e => e.textContent);
             assert.equal(heading.trim().replace(/(\s){2,}/g, '$1'), 'Ubuntu 16.04 - Creating New User and Adding SSH Keys');

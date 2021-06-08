@@ -4,10 +4,11 @@ const assert = require('assert').strict;
 module.exports = () => Promise.all([
     (async () => {
         const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-        await page.goto('https://pogchamp.today/');
 
         try {
+            const page = await browser.newPage();
+            await page.goto('https://pogchamp.today/');
+
             // Check the heading is there
             const heading = await page.$eval('#title', e => e.textContent);
             assert.equal(heading.trim(), 'YournewPogChampis...');

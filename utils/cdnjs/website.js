@@ -3,19 +3,20 @@ const assert = require('assert').strict;
 
 module.exports = async host => {
     const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    await page.goto(`https://${host}/`);
-
-    page.on('console', msg =>
-        console.log('Console:', `${msg.type()} ${msg.text()}`));
-    page.on('error', err =>
-        console.log('Error:', err));
-    page.on('pageerror', pageerr =>
-        console.log('Page error:', pageerr));
-    page.on('requestfailed', request =>
-        console.log('Request failed:', `${request.failure().errorText} ${request.url()}`));
 
     try {
+        const page = await browser.newPage();
+        await page.goto(`https://${host}/`);
+
+        page.on('console', msg =>
+            console.log('Console:', `${msg.type()} ${msg.text()}`));
+        page.on('error', err =>
+            console.log('Error:', err));
+        page.on('pageerror', pageerr =>
+            console.log('Page error:', pageerr));
+        page.on('requestfailed', request =>
+            console.log('Request failed:', `${request.failure().errorText} ${request.url()}`));
+
         // Check the heading is there
         const heading = await page.$eval('.landing h1', e => e.textContent);
         assert.equal(heading.trim().replace(/(\s){2,}/g, '$1'), 'Simple. Fast. Reliable. Content delivery at its finest.');

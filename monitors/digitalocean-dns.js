@@ -3,10 +3,11 @@ const assert = require('assert').strict;
 
 module.exports = async () => {
     const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    await page.goto('https://www.digitalocean.com/community/tools/dns');
 
     try {
+        const page = await browser.newPage();
+        await page.goto('https://www.digitalocean.com/community/tools/dns');
+
         // Check the heading is there
         const heading = await page.$eval('.do-bulma .landing h1', e => e.textContent);
         assert.equal(heading.trim(), 'DNS Lookup');

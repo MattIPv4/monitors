@@ -3,10 +3,11 @@ const assert = require('assert').strict;
 
 module.exports = async () => {
     const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    await page.goto('https://www.digitalocean.com/community/pages/hub-for-good-projects');
 
     try {
+        const page = await browser.newPage();
+        await page.goto('https://www.digitalocean.com/community/pages/hub-for-good-projects');
+
         // Check the initial projects rendered
         const [ allProjects ] = await page.$x('//div[contains(concat(" ", normalize-space(@class), " "), "hub-for-good-list")]//*[starts-with(normalize-space(text()), "All projects")]');
         assert.notEqual(allProjects, null);

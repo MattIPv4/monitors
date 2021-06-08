@@ -5,10 +5,11 @@ const fetchJson = require('./fetch-json');
 module.exports = host => Promise.all([
     (async () => {
         const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-        await page.goto(`https://${host}/`);
 
         try {
+            const page = await browser.newPage();
+            await page.goto(`https://${host}/`);
+
             // Check the heading is there
             const heading = await page.$eval('.hero h1', e => e.textContent);
             assert.equal(heading.trim(), 'Discord Bot Lists? We have them all.');

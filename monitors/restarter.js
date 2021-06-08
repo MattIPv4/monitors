@@ -12,6 +12,7 @@ module.exports = async () => {
         const headingHomepage = await page.$eval('.content h1', e => e.textContent);
         assert.equal(headingHomepage.trim(), 'Restarter v3');
 
+        // Check the docs heading is there
         await page.goto('https://restarter.mattcowley.co.uk/docs/');
         const headingDocs = await page.$eval('.content h1', e => e.textContent);
         assert.equal(headingDocs.trim(), 'Restarter v3 Docs');
