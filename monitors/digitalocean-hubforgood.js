@@ -15,13 +15,19 @@ module.exports = async () => {
         const initialProjects = await page.$$('.hub-for-good-list table tbody tr');
         assert.equal(initialProjects.length, Number(allProjectsText.match(/^All projects \(([\d,.]+)\)$/)[1]));
 
-        // Check interactivity with updating category
-        await page.click('.hub-for-good-list [role="combobox"]');
+        // Interact to open the category selector
+        const [ categorySelect ] = await page.$$('.hub-for-good-list [role="combobox"]');
+        assert.notEqual(categorySelect, null);
+        await page.evaluate(element => element.scrollIntoView(), categorySelect);
+        await categorySelect.click();
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        // Interact to change the category
         const [ otherPurposes ] = await page.$x('//div[contains(concat(" ", normalize-space(@class), " "), "hub-for-good-list")]//*[@role="listbox"]//*[starts-with(normalize-space(text()), "Other purposes")]');
         assert.notEqual(otherPurposes, null);
+        await page.evaluate(element => element.scrollIntoView(), otherPurposes);
         await otherPurposes.click();
-        await new Promise(resolve => setTimeout(resolve, 250));
-        await otherPurposes.click();
+        await new Promise(resolve => setTimeout(resolve, 500));
 
         // Check it updated the rendered projects
         const otherPurposesText = await page.evaluate(element => element.textContent.trim(), otherPurposes);

@@ -31,7 +31,8 @@ const runMonitor = async (name, func) => {
         consola.warn(err);
     }
 
-    consola.info(`Rerunning monitor ${name}...`);
+    consola.info(`Rerunning monitor ${name} in 30s...`);
+    await new Promise(resolve => setTimeout(resolve, 30000));
     try {
         await func();
         consola.success('Passed!');
