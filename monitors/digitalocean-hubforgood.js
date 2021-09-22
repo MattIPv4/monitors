@@ -13,7 +13,7 @@ module.exports = async () => {
         assert.notEqual(allProjects, null);
         const allProjectsText = await page.evaluate(element => element.textContent.trim(), allProjects);
         const initialProjects = await page.$$('.hub-for-good-list table tbody tr');
-        assert.equal(initialProjects.length, Number(allProjectsText.match(/^All projects \(([\d,.]+)\)$/)[1]));
+        assert.equal(initialProjects.length, Number(allProjectsText.match(/^All projects \(([\d,.]+)\)$/)[1].replace(/,/g, '')));
 
         // Interact to open the category selector
         const [ categorySelect ] = await page.$$('.hub-for-good-list [role="combobox"]');
