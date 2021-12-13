@@ -11,8 +11,10 @@ module.exports = host => Promise.all([
             await page.goto(`https://${host}/`);
 
             // Check the heading is there
-            const heading = await page.$eval('.hero h1', e => e.textContent);
-            assert.equal(heading.trim(), 'Discord Bot Lists? We have them all.');
+            const headingH1 = await page.$eval('.headline h1', e => e.textContent);
+            assert.equal(headingH1.trim(), 'BotBlock.org');
+            const headingP = await page.$eval('.headline p', e => e.textContent);
+            assert.equal(headingP.trim(), 'The single source for all Discord bot lists.');
 
         } catch (e) {
             // Close the browser before error-ing
