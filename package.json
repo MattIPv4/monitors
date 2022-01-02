@@ -18,6 +18,8 @@
     "is-port-reachable": "^3.0.0",
     "mysql": "^2.18.1",
     "node-fetch": "^2.6.1",
-    "puppeteer": "^5.5.0"
+    "pg": "^8.7.1",
+    "puppeteer": "^5.5.0",
+    "ssh2": "^1.5.0"
   }
 }
