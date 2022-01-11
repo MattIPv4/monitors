@@ -1,4 +1,4 @@
-// const botblock = require('../utils/botblock');
+const botblock = require('../utils/botblock');
 
-module.exports = () => Promise.resolve(); // botblock('staging.botblock.org');
+module.exports = () => botblock('staging.botblock.org');
 
