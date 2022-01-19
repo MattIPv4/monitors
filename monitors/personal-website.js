@@ -10,7 +10,7 @@ module.exports = async () => {
 
         // Check the heading is there
         const heading = await page.$eval('.content h1', e => e.textContent);
-        assert(heading.trim().replace(/(\s){2,}/g, '$1').includes('Matt (IPv4) Cowley'));
+        assert(heading.trim().replace(/(\s){2,}/g, '$1').includes('Matt Cowley'));
 
     } catch (e) {
         // Close the browser before error-ing
