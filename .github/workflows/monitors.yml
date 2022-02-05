@@ -2,8 +2,6 @@ name: Monitors
 
 on:
   push:
-#  schedule:
-#    - cron: '*/5 * * * *'
   workflow_dispatch:
 
 jobs:
@@ -16,48 +14,50 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
 
     steps:
-    - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set Node.js version from .nvmrc
-      id: set-node
-      run: |
-        NODE=$(cat .nvmrc)
-        echo $NODE
-        echo "::set-output name=node::$NODE"
+      - name: Set Node.js version from .nvmrc
+        id: set-node
+        run: |
+          NODE=$(cat .nvmrc)
+          echo $NODE
+          echo "::set-output name=node::$NODE"
 
-    - name: Use Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ steps.set-node.outputs.node }}
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.set-node.outputs.node }}
 
-    - uses: actions/cache@v2
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-    - name: Install NPM dependencies
-      run: npm ci
+      - name: Install NPM dependencies
+        run: npm ci
 
-    - name: Set disabled monitors list
-      id: set-disabled
-      run: |
-        DISABLED=$(npm run disabled)
-        echo $DISABLED
-        echo "::set-output name=disabled::$DISABLED"
+      - name: Set disabled monitors list
+        id: set-disabled
+        run: |
+          DISABLED=$(npm run disabled)
+          echo $DISABLED
+          echo "::set-output name=disabled::$DISABLED"
 
-    - name: Set job matrix from located monitors
-      id: set-matrix
-      run: |
-        MONITORS=$(npm run locate)
-        echo $MONITORS
-        echo "::set-output name=matrix::{\"monitor\":$MONITORS}"
+      - name: Set job matrix from located monitors
+        id: set-matrix
+        run: |
+          MONITORS=$(npm run locate)
+          echo $MONITORS
+          echo "::set-output name=matrix::{\"monitor\":$MONITORS}"
 
-    - name: Display outputs
-      run: |
-        echo ${{ steps.set-node.outputs.node }}
-        echo ${{ steps.set-matrix.outputs.matrix }}
+      - name: Display outputs
+        run: |
+          echo ${{ steps.set-node.outputs.node }}
+          echo ${{ steps.set-matrix.outputs.matrix }}
 
   monitor:
     needs: locate
@@ -71,23 +71,29 @@ jobs:
     timeout-minutes: 5
 
     steps:
-    - uses: actions/checkout@v2
+      - name: Checkout repository
+        if: ${{ !contains(fromJson(needs.locate.outputs.disabled), matrix.monitor) }}
+        uses: actions/checkout@v2
 
-    - name: Use Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ needs.locate.outputs.node }}
+      - name: Use Node.js
+        if: ${{ !contains(fromJson(needs.locate.outputs.disabled), matrix.monitor) }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ needs.locate.outputs.node }}
 
-    - uses: actions/cache@v2
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
+      - name: Cache dependencies
+        if: ${{ !contains(fromJson(needs.locate.outputs.disabled), matrix.monitor) }}
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-    - name: Install dependencies
-      run: npm ci
+      - name: Install dependencies
+        if: ${{ !contains(fromJson(needs.locate.outputs.disabled), matrix.monitor) }}
+        run: npm ci
 
-    - name: Run monitor
-      if: ${{ !contains(fromJson(needs.locate.outputs.disabled), matrix.monitor) }}
-      run: npm run monitor -- ${{ matrix.monitor }}
+      - name: Run monitor
+        if: ${{ !contains(fromJson(needs.locate.outputs.disabled), matrix.monitor) }}
+        run: npm run monitor -- ${{ matrix.monitor }}
