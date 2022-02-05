@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 const assert = require('assert').strict;
 
 module.exports = async () => {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ defaultViewport: { width: 1920, height: 1080 } });
 
     try {
         const page = await browser.newPage();
@@ -17,14 +17,15 @@ module.exports = async () => {
         assert.equal(initialDroplet.length, 1);
 
         // Check adding a Droplet works
-        await page.click('.picker .panel-list .panel.is-droplet');
+        const [ dropletPanel ] = await page.$$('.picker .panel-list .panel.is-droplet');
+        assert.notEqual(dropletPanel, null);
+        await page.evaluate(element => element.scrollIntoView(), dropletPanel);
+        await dropletPanel.click();
+
         const updatedDroplets = await page.$$('.droplets .panel-list-vertical .panel.is-droplet');
         assert.equal(updatedDroplets.length, 2);
 
     } catch (e) {
-        // This isn't working reliably, screenshot to debug
-        console.log(await page.screenshot({ fullPage: true, encoding: 'base64' }));
-
         // Close the browser before error-ing
         await browser.close();
 
