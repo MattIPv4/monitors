@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 const assert = require('assert').strict;
 
 module.exports = async () => {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ defaultViewport: { width: 1920, height: 1080 } });
 
     try {
         const page = await browser.newPage();
@@ -15,6 +15,7 @@ module.exports = async () => {
         // Check a button in the tool works
         const [ button ] = await page.$x('//a[contains(text(), "Routing")]');
         assert.notEqual(button, null);
+        await page.evaluate(element => element.scrollIntoView(), button);
         await button.click();
 
         // Look for the routing content and check its now visible

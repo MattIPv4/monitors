@@ -5,5 +5,4 @@ console.log(JSON.stringify([
     'kasper-port-80',
     'kasper-port-443',
     'digitalocean-hubforgood',
-    'digitalocean-nginxconfig',
 ]));
