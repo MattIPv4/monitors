@@ -9,8 +9,12 @@ module.exports = host => browserPage(`https://${host}/`, async page => {
     // Click on something other than the search box
     await page.click('.landing h1');
     await page.waitForTimeout(1500);
+    await page.click('.landing h1');
+    await page.waitForTimeout(1500);
 
     // Click back on the search box to trigger hits to show
+    await page.click('.landing .ais-SearchBox-input');
+    await page.waitForTimeout(1500);
     await page.click('.landing .ais-SearchBox-input');
     await page.waitForTimeout(1500);
 
