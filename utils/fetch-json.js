@@ -26,4 +26,6 @@ module.exports = async url => {
     } catch (_) {}
     if (data === null || data === undefined || typeof data !== 'object')
         throw new Error(`Unexpected endpoint response: ${JSON.stringify(data)}`);
+
+    return data;
 };
