@@ -8,14 +8,14 @@ export default () => browserPage('https://www.digitalocean.com/community/tools/n
 
     // Check a button in the tool works
     const [ button ] = await page.$x('//a[contains(text(), "Routing")]');
-    assert.notEqual(button, null);
+    assert.notEqual(button, undefined);
     await page.evaluate(element => element.scrollIntoView(), button);
     await page.waitForTimeout(500);
     await button.click();
 
     // Look for the routing content and check its now visible
     const [ label ] = await page.$x('//label[contains(text(), "Fallback routing")]');
-    assert.notEqual(label, null);
+    assert.notEqual(label, undefined);
     const labelBox = await label.boundingBox();
     assert.notEqual(labelBox, null);
 });

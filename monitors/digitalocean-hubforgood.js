@@ -4,7 +4,7 @@ import browserPage from '../utils/browser-page';
 export default () => browserPage('https://www.digitalocean.com/community/pages/hub-for-good-projects', async page => {
     // Check the initial projects rendered
     const [ allProjects ] = await page.$x('//div[contains(concat(" ", normalize-space(@class), " "), "hub-for-good-list")]//*[starts-with(normalize-space(text()), "All projects")]');
-    assert.notEqual(allProjects, null);
+    assert.notEqual(allProjects, undefined);
     const allProjectsText = await page.evaluate(element => element.textContent.trim(), allProjects);
     const initialProjects = await page.$$('.hub-for-good-list table tbody tr');
     assert.equal(initialProjects.length, Number(allProjectsText.match(/^All projects \(([\d,.]+)\)$/)[1].replace(/,/g, '')));
@@ -18,7 +18,7 @@ export default () => browserPage('https://www.digitalocean.com/community/pages/h
 
     // Interact to change the category
     const [ otherPurposes ] = await page.$x('//div[contains(concat(" ", normalize-space(@class), " "), "hub-for-good-list")]//*[@role="listbox"]//*[starts-with(normalize-space(text()), "Other purposes")]');
-    assert.notEqual(otherPurposes, null);
+    assert.notEqual(otherPurposes, undefined);
     await page.evaluate(element => element.scrollIntoView(), otherPurposes);
     await page.waitForTimeout(500);
     await otherPurposes.click();
