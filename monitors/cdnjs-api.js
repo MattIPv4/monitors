@@ -1,3 +1,3 @@
-const api = require('../utils/cdnjs/api');
+import api from '../utils/cdnjs/api';
 
-module.exports = () => api('api.cdnjs.com');
+export default () => api('api.cdnjs.com');

@@ -1,4 +1,4 @@
-const consola = require('consola');
+import consola from 'consola';
 
 // Show any error and then exit
 const error = (msg, err) => {
@@ -8,10 +8,10 @@ const error = (msg, err) => {
 };
 
 // Import a monitor module
-const loadMonitor = name => {
+const loadMonitor = async name => {
     consola.info(`Loading monitor ${name}...`);
     try {
-        const monitorFunc = require(`../monitors/${name}.js`);
+        const { default: monitorFunc } = await import(`../monitors/${name}.js`);
         consola.success('Loaded!');
         return monitorFunc;
     } catch (err) {
@@ -47,7 +47,7 @@ const main = async () => {
         return error('Specify monitor name as argument');
 
     const monitorName = process.argv[2];
-    const monitorFunc = loadMonitor(monitorName);
+    const monitorFunc = await loadMonitor(monitorName);
     await runMonitor(monitorName, monitorFunc);
 };
 

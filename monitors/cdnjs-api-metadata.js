@@ -1,6 +1,6 @@
-const fetchJson = require('../utils/fetch-json');
+import fetchJson from '../utils/fetch-json';
 
-module.exports = () => Promise.all([
+export default () => Promise.all([
     fetchJson('https://metadata.speedcdnjs.com/packages'),
     fetchJson('https://metadata.speedcdnjs.com/packages/vue'),
     fetchJson('https://metadata.speedcdnjs.com/packages/vue/all'),

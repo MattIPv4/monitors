@@ -1,7 +1,7 @@
-const assert = require('assert').strict;
-const browserPage = require('../utils/browser-page');
+import { strict as assert } from 'assert';
+import browserPage from '../utils/browser-page';
 
-module.exports = () => browserPage('https://www.digitalocean.com/community/tools/dns', async page => {
+export default () => browserPage('https://www.digitalocean.com/community/tools/dns', async page => {
     // Check the heading is there
     const heading = await page.$eval('.do-bulma .landing h1', e => e.textContent);
     assert.equal(heading.trim(), 'DNS Lookup');

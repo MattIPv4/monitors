@@ -1,3 +1,3 @@
-const botblock = require('../utils/botblock');
+import botblock from '../utils/botblock';
 
-module.exports = () => botblock('staging.botblock.org');
+export default () => botblock('staging.botblock.org');

@@ -1,7 +1,7 @@
-const assert = require('assert').strict;
-const fetchUncached = require('../utils/fetch-uncached');
+import { strict as assert } from 'assert';
+import fetchUncached from '../utils/fetch-uncached';
 
-module.exports = () => Promise.all([
+export default () => Promise.all([
     (async () => {
         // Fetch and check response code
         const res = await fetchUncached('https://hackathon-tracker.digitalocean.com/');

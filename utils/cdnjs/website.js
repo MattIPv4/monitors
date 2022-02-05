@@ -1,7 +1,7 @@
-const assert = require('assert').strict;
-const browserPage = require('../browser-page');
+import { strict as assert } from 'assert';
+import browserPage from '../browser-page';
 
-module.exports = host => browserPage(`https://${host}/`, async page => {
+export default host => browserPage(`https://${host}/`, async page => {
     // Check the heading is there
     const heading = await page.$eval('.landing h1', e => e.textContent);
     assert.equal(heading.trim().replace(/(\s){2,}/g, '$1'), 'Simple. Fast. Reliable. Content delivery at its finest.');

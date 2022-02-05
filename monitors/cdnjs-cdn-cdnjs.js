@@ -1,3 +1,3 @@
-const cdn = require('../utils/cdnjs/cdn');
+import cdn from '../utils/cdnjs/cdn';
 
-module.exports = () => cdn('ajax.cdnjs.com');
+export default () => cdn('ajax.cdnjs.com');

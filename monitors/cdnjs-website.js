@@ -1,3 +1,3 @@
-const website = require('../utils/cdnjs/website');
+import website from '../utils/cdnjs/website';
 
-module.exports = () => website('cdnjs.com');
+export default () => website('cdnjs.com');

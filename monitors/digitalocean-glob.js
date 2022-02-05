@@ -1,5 +1,5 @@
-const assert = require('assert').strict;
-const browserPage = require('../utils/browser-page');
+import { strict as assert } from 'assert';
+import browserPage from '../utils/browser-page';
 
 const clearInput = async page => {
     await page.evaluate(() => document.execCommand('selectAll', false, null));
@@ -11,7 +11,7 @@ const typeLine = async (page, text) => {
     await page.keyboard.press('Enter');
 };
 
-module.exports = () => browserPage('https://www.digitalocean.com/community/tools/glob', async page => {
+export default () => browserPage('https://www.digitalocean.com/community/tools/glob', async page => {
     // Check the heading is there
     const heading = await page.$eval('.do-bulma .header h1', e => e.textContent);
     assert.equal(heading.trim(), 'Glob Tool');

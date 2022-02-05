@@ -1,8 +1,8 @@
-const assert = require('assert').strict;
-const fetchHealth = require('../utils/fetch-health');
-const fetchUncached = require('../utils/fetch-uncached');
+import { strict as assert } from 'assert';
+import fetchHealth from '../utils/fetch-health';
+import fetchUncached from '../utils/fetch-uncached';
 
-module.exports = () => Promise.all([
+export default () => Promise.all([
     fetchHealth('https://www.digitalocean.com/api/dynamic-content/health'),
     (async () => {
         // Fetch and check response code

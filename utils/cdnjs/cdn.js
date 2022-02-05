@@ -1,8 +1,8 @@
-const crypto = require('crypto');
-const assert = require('assert').strict;
-const fetchUncached = require('../fetch-uncached');
+import crypto from 'crypto';
+import { strict as assert } from 'assert';
+import fetchUncached from '../fetch-uncached';
 
-module.exports = async host => {
+export default async host => {
     const res = await fetchUncached(`https://${host}/ajax/libs/vue/3.0.5/vue.cjs.js`);
     if (!res.ok) throw new Error(`HTTP request failed: ${res.status} ${res.statusText}`);
 

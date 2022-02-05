@@ -1,3 +1,3 @@
-const fetchHealth = require('../utils/fetch-health');
+import fetchHealth from '../utils/fetch-health';
 
-module.exports = () => fetchHealth('https://dns-over-discord.v4.wtf/health');
+export default () => fetchHealth('https://dns-over-discord.v4.wtf/health');

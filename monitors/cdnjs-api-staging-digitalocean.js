@@ -1,3 +1,3 @@
-const api = require('../utils/cdnjs/api');
+import api from '../utils/cdnjs/api';
 
-module.exports = () => api('staging.digitalocean.api.cdnjs.dev', 'hi-sven');
+export default () => api('staging.digitalocean.api.cdnjs.dev', 'hi-sven');

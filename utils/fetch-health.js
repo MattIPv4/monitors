@@ -1,6 +1,6 @@
-const fetchUncached = require('./fetch-uncached');
+import fetchUncached from './fetch-uncached';
 
-module.exports = async (url, resp = 'OK') => {
+export default async (url, resp = 'OK') => {
     const res = await fetchUncached(url);
     if (!res.ok) throw new Error(`HTTP request failed: ${res.status} ${res.statusText}`);
 

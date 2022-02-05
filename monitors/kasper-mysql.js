@@ -1,7 +1,7 @@
-const isPortReachable = require('is-port-reachable');
-const mysql = require('mysql');
+import isPortReachable from 'is-port-reachable';
+import mysql from 'mysql';
 
-module.exports = () => Promise.all([
+export default () => Promise.all([
     isPortReachable(3306, { host: 'kasper.servers.unreal-designs.co.uk' }),
     new Promise(resolve => {
         const connection = mysql.createConnection({ host: 'kasper.servers.unreal-designs.co.uk' });

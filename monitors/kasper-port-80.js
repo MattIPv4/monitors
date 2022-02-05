@@ -1,3 +1,3 @@
-const isPortReachable = require('is-port-reachable');
+import isPortReachable from 'is-port-reachable';
 
-module.exports = () => isPortReachable(80, { host: 'kasper.servers.unreal-designs.co.uk' });
+export default () => isPortReachable(80, { host: 'kasper.servers.unreal-designs.co.uk' });

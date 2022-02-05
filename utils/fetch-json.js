@@ -1,5 +1,5 @@
-const gunzip = require('gunzip-maybe');
-const fetchUncached = require('./fetch-uncached');
+import gunzip from 'gunzip-maybe';
+import fetchUncached from './fetch-uncached';
 
 // We're always fetching JSON, but sometimes it's gzipped
 const gunzipBody = (body) => new Promise((resolve, reject) => {
@@ -15,7 +15,7 @@ const gunzipBody = (body) => new Promise((resolve, reject) => {
     });
 });
 
-module.exports = async url => {
+export default async url => {
     const res = await fetchUncached(url);
     if (!res.ok) throw new Error(`HTTP request failed: ${res.status} ${res.statusText}`);
 

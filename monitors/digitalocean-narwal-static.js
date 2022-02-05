@@ -1,8 +1,8 @@
-const assert = require('assert').strict;
-const fetchHealth = require('../utils/fetch-health');
-const fetchJson = require('../utils/fetch-json');
+import { strict as assert } from 'assert';
+import fetchHealth from '../utils/fetch-health';
+import fetchJson from '../utils/fetch-json';
 
-module.exports = () => Promise.all([
+export default () => Promise.all([
     fetchHealth('https://www.digitalocean.com/api/static-content/health'),
     (async () => {
         const data = await fetchJson('https://www.digitalocean.com/api/static-content/v1/tutorials/react-axios-react');

@@ -1,7 +1,7 @@
-const assert = require('assert').strict;
-const browserPage = require('../utils/browser-page');
+import { strict as assert } from 'assert';
+import browserPage from '../utils/browser-page';
 
-module.exports = () => Promise.all([
+export default () => Promise.all([
     browserPage('https://www.digitalocean.com/community', async page => {
         // Check the heading is there
         const heading = await page.$eval('h1', e => e.textContent);

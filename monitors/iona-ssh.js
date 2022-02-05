@@ -1,7 +1,7 @@
-const isPortReachable = require('is-port-reachable');
-const ssh = require('ssh2');
+import isPortReachable from 'is-port-reachable';
+import ssh from 'ssh2';
 
-module.exports = () => Promise.all([
+export default () => Promise.all([
     isPortReachable(22, { host: 'iona.s.mattcowley.co.uk' }),
     new Promise(resolve => {
         const connection = new ssh.Client();

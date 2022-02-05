@@ -1,7 +1,7 @@
-const assert = require('assert').strict;
-const browserPage = require('../utils/browser-page');
+import { strict as assert } from 'assert';
+import browserPage from '../utils/browser-page';
 
-module.exports = () => browserPage('https://hacktoberfest.digitalocean.com/', async page => {
+export default () => browserPage('https://hacktoberfest.digitalocean.com/', async page => {
     // Check the heading is there
     // const heading = await page.$eval('p:first-of-type', e => e.textContent);
     // assert.equal(heading.trim().replace(/(\s){2,}/g, '$1'), 'Open source is changing the world – one contribution at a time.');

@@ -1,3 +1,3 @@
-const cdn = require('../utils/cdnjs/cdn');
+import cdn from '../utils/cdnjs/cdn';
 
-module.exports = () => cdn('cdnjs.cloudflare.com');
+export default () => cdn('cdnjs.cloudflare.com');

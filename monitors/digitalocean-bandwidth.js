@@ -1,7 +1,7 @@
-const assert = require('assert').strict;
-const browserPage = require('../utils/browser-page');
+import { strict as assert } from 'assert';
+import browserPage from '../utils/browser-page';
 
-module.exports = () => browserPage('https://www.digitalocean.com/community/tools/bandwidth', async page => {
+export default () => browserPage('https://www.digitalocean.com/community/tools/bandwidth', async page => {
     // Check the heading is there
     const heading = await page.$eval('.bandwidth h1', e => e.textContent);
     assert.equal(heading.trim(), 'Bandwidth Calculator');

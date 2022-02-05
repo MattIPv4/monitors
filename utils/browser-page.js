@@ -1,6 +1,6 @@
-const puppeteer = require('puppeteer');
+import puppeteer from 'puppeteer';
 
-module.exports = async (url, callback) => {
+export default async (url, callback) => {
     const browser = await puppeteer.launch({ defaultViewport: { width: 1920, height: 1080 } });
     try {
         const pages = await browser.pages();

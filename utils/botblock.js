@@ -1,8 +1,8 @@
-const assert = require('assert').strict;
-const fetchJson = require('./fetch-json');
-const browserPage = require('./browser-page');
+import { strict as assert } from 'assert';
+import fetchJson from './fetch-json';
+import browserPage from './browser-page';
 
-module.exports = host => Promise.all([
+export default host => Promise.all([
     browserPage(`https://${host}/`, async page => {
         // Check the heading is there
         const headingH1 = await page.$eval('.headline h1', e => e.textContent);

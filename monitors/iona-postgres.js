@@ -1,7 +1,7 @@
-const isPortReachable = require('is-port-reachable');
-const pg = require('pg');
+import isPortReachable from 'is-port-reachable';
+import pg from 'pg';
 
-module.exports = () => Promise.all([
+export default () => Promise.all([
     isPortReachable(5432, { host: 'iona.s.mattcowley.co.uk' }),
     (async () => {
         const connection = new pg.Client({ host: 'iona.s.mattcowley.co.uk' });

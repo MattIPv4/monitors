@@ -1,6 +1,6 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
-module.exports = (url, opts = {}) => {
+export default (url, opts = {}) => {
     const controller = new AbortController();
     const timeout = setTimeout(() => {
         controller.abort()

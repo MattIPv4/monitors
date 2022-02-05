@@ -1,7 +1,7 @@
-const assert = require('assert').strict;
-const browserPage = require('../utils/browser-page');
+import { strict as assert } from 'assert';
+import browserPage from '../utils/browser-page';
 
-module.exports = () => browserPage('https://www.digitalocean.com/community/pages/hub-for-good-projects', async page => {
+export default () => browserPage('https://www.digitalocean.com/community/pages/hub-for-good-projects', async page => {
     // Check the initial projects rendered
     const [ allProjects ] = await page.$x('//div[contains(concat(" ", normalize-space(@class), " "), "hub-for-good-list")]//*[starts-with(normalize-space(text()), "All projects")]');
     assert.notEqual(allProjects, null);

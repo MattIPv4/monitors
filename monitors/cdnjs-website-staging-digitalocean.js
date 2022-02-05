@@ -1,3 +1,3 @@
-const website = require('../utils/cdnjs/website');
+import website from '../utils/cdnjs/website';
 
-module.exports = () => website('staging.digitalocean.cdnjs.dev');
+export default () => website('staging.digitalocean.cdnjs.dev');

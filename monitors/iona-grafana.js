@@ -1,8 +1,8 @@
-const isPortReachable = require('is-port-reachable');
-const assert = require('assert').strict;
-const browserPage = require('../utils/browser-page');
+import isPortReachable from 'is-port-reachable';
+import { strict as assert } from 'assert';
+import browserPage from '../utils/browser-page';
 
-module.exports = () => Promise.all([
+export default () => Promise.all([
     isPortReachable(8080, { host: 'iona.s.mattcowley.co.uk' }),
     browserPage('http://iona.s.mattcowley.co.uk:8080', async (page, response) => {
         // Check it redirects to login
