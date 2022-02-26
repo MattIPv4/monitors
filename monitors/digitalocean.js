@@ -2,35 +2,81 @@ import { strict as assert } from 'assert';
 import fetchHealth from '../utils/fetch-health';
 import browserPage from '../utils/browser-page';
 
+const checkLogIn = async page => {
+    // Find the navbar login button
+    const [ logIn ] = await page.$x('//nav//a//*[contains(text(), "Log In")]//parent::a');
+    assert.notEqual(logIn, undefined);
+
+    // Click the login button
+    const [ response ] = await Promise.all([
+        page.waitForNavigation(),
+        logIn.click(),
+    ]);
+
+    // Check we're now on the login page
+    try {
+        assert.equal(response.url(), 'https://cloud.digitalocean.com/login');
+    } catch (e) {
+        // Or check we're on the captcha page
+        try {
+            assert.equal(response.url(), 'https://cloud.digitalocean.com/graphql/public/test?challenge=/login');
+        } catch {
+            // Throw the original error
+            throw e;
+        }
+    }
+};
+
+const checkSignUp = async page => {
+    // Find the navbar sign up button
+    const [ signUp ] = await page.$x('//nav//a//*[contains(text(), "Sign Up")]//parent::a');
+    assert.notEqual(signUp, undefined);
+
+    // Click the sign up button
+    const [ response ] = await Promise.all([
+        page.waitForNavigation(),
+        signUp.click(),
+    ]);
+
+    // Check we're now on the sign up page
+    try {
+        assert.equal(response.url(), 'https://cloud.digitalocean.com/registrations/new');
+    } catch (e) {
+        // Or check we're on the captcha page
+        try {
+            assert.equal(response.url(), 'https://cloud.digitalocean.com/graphql/public/test?challenge=/registrations/new');
+        } catch {
+            // Throw the original error
+            throw e;
+        }
+    }
+};
+
 export default () => Promise.all([
     fetchHealth('https://www.digitalocean.com/health', '<html><body><h1>200 OK</h1>Service ready.</body></html>'),
     fetchHealth('https://www.digitalocean.com/metrics', '# OK'),
+    browserPage('https://www.digitalocean.com/', checkLogIn),
+    browserPage('https://www.digitalocean.com/', checkSignUp),
     browserPage('https://www.digitalocean.com/', async page => {
-        // Find the navbar log in button
-        const [ logIn ] = await page.$x('//nav//a//*[contains(text(), "Log In")]//parent::a');
-        assert.notEqual(logIn, undefined);
+        // Find the menu hamburger button
+        const hamburger  = await page.$('button[class*="Hamburger"]');
+        assert.notEqual(hamburger, null);
 
-        // Click the log in button
-        const [ response ] = await Promise.all([
-            page.waitForNavigation(),
-            logIn.click(),
-        ]);
+        // Click the menu hamburger button
+        await hamburger.click();
 
-        // Check we're now on the login page
-        assert.equal(response.url(), 'https://cloud.digitalocean.com/login');
-    }),
+        // Check for the login button
+        await checkLogIn(page);
+    }, true),
     browserPage('https://www.digitalocean.com/', async page => {
-        // Find the navbar sign up button
-        const [ signUp ] = await page.$x('//nav//a//*[contains(text(), "Sign Up")]//parent::a');
-        assert.notEqual(signUp, undefined);
+        // Find the menu hamburger button
+        const hamburger  = await page.$('button[class*="Hamburger"]');
+        assert.notEqual(hamburger, null);
 
-        // Click the sign up button
-        const [ response ] = await Promise.all([
-            page.waitForNavigation(),
-            signUp.click(),
-        ]);
+        // Click the menu hamburger button
+        await hamburger.click();
 
-        // Check we're now on the sign up page
-        assert.equal(response.url(), 'https://cloud.digitalocean.com/registrations/new');
-    }),
+        // Check for the sign in button
+        await checkSignUp(page);
+    }, true),
 ]);
