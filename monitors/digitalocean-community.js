@@ -45,7 +45,7 @@ export default () => Promise.all([
 
         // Check the description is there
         const description = await page.$eval('div[class*="TagDescription"]', e => e.textContent);
-        assert.equal(description.trim().replace(/(\s){2,}/g, '$1'), 'JavaScript is a high-level, prototype-based, dynamic scripting language used to create interactive web pages and applications.');
+        assert.equal(description.trim().replace(/(\s){2,}/g, '$1'), 'JavaScript (also referred to as ‘javascript’ or JS) is a high-level, prototype-based, dynamic scripting language used to create interactive web pages and applications. Its flexibility and front and back-end capabilities make JavaScript a popular programming language. Some of the useful features of JavaScript include storing values in variables, performing operations on strings, and triggering or acting on events that happen in the DOM.');
 
         // Check the featured content is there
         const featured = await page.$('div[class*="FeatureTutorialsGrid"]');
