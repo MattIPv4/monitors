@@ -54,9 +54,9 @@ export default () => Promise.all([
         assert(featuredItemsCount > 0);
 
         // Check the results are there
-        const list = await page.$('li[class*="TabbedHeaderListItem"] ul[class*="IndexList"]');
+        const list = await page.$('[class*="TabbedHeaderListItem"] > [class*="StyledContainer"]');
         assert.notEqual(list, null);
-        const listItemsCount = await list.$$eval(':scope > li[class*="IndexListItem"]', e => e.length);
+        const listItemsCount = await list.$$eval(':scope > [class*="IndexListItem"]', e => e.length);
         assert(listItemsCount > 0);
     }),
 ]);
