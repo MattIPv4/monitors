@@ -34,7 +34,7 @@ export default () => Promise.all([
         assert(questionContent.includes('Any help to point me in the right direction would be great!'));
 
         // Check the answers are there
-        const answerContent = await page.$eval('span[class*="CommentBody"] div[class*="Markdown"]', e => e.textContent);
+        const answerContent = await page.$eval('div[class*="CommentBody"] div[class*="Markdown"]', e => e.textContent);
         assert(answerContent.includes('The root user is a super user and the only real super user on the OS by default.'));
         assert(answerContent.includes('The public key only needs to exist in the file above and you shouldn’t keep your private key on the server :-).'));
     }),
