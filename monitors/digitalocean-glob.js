@@ -38,4 +38,4 @@ export default () => browserPage('https://www.digitalocean.com/community/tools/g
     // Check the correct misses are shown
     const misses = await page.$$('.do-bulma .main .textarea .miss');
     assert.equal(misses.length, 3);
-});
+}, false, [ 'consent.trustarc.com' ]);

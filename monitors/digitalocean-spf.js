@@ -23,4 +23,4 @@ export default () => browserPage('https://www.digitalocean.com/community/tools/s
     assert.equal(resultsHeadingText.trim(), 'SPF records for digitalocean.com:');
     const resultsDiv = await page.$('.do-bulma .container > div > div:nth-of-type(2)');
     assert.notEqual(resultsDiv, null);
-});
+}, false, [ 'consent.trustarc.com' ]);

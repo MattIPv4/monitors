@@ -25,4 +25,4 @@ export default () => browserPage('https://www.digitalocean.com/community/tools/d
     assert.notEqual(tableRow, null);
     const tableRowText = await tableRow.evaluate(e => e.textContent);
     assert.equal(tableRowText.trim(), 'digitalocean.com');
-});
+}, false, [ 'consent.trustarc.com' ]);
