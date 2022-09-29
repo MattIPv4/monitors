@@ -9,7 +9,7 @@ export default () => browserPage('https://www.digitalocean.com/community/tools/n
     // Check a button in the tool works
     const [ button ] = await page.$x('//a[contains(text(), "Routing")]');
     assert.notEqual(button, undefined);
-    await page.evaluate(element => element.scrollIntoView(), button);
+    await page.evaluate(element => element.scrollIntoView({ behavior: 'smooth', block: 'center' }), button);
     await page.waitForTimeout(500);
     await button.click();
 
@@ -18,4 +18,4 @@ export default () => browserPage('https://www.digitalocean.com/community/tools/n
     assert.notEqual(label, undefined);
     const labelBox = await label.boundingBox();
     assert.notEqual(labelBox, null);
-});
+}, false, [ 'consent.trustarc.com' ]);
