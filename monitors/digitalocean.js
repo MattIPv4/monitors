@@ -4,7 +4,7 @@ import browserPage from '../utils/browser-page';
 
 const checkLogIn = async page => {
     // Find the navbar login button
-    const [ logIn ] = await page.$x('//nav//a//*[contains(text(), "Log In")]//parent::a');
+    const [ logIn ] = await page.$x('//nav//ul[not(@aria-label="Main")]//a[contains(text(), "Log in")]');
     assert.notEqual(logIn, undefined);
 
     // Click the login button
@@ -29,7 +29,7 @@ const checkLogIn = async page => {
 
 const checkSignUp = async page => {
     // Find the navbar sign up button
-    const [ signUp ] = await page.$x('//nav//a//*[contains(text(), "Sign Up")]//parent::a');
+    const [ signUp ] = await page.$x('//nav//ul[not(@aria-label="Main")]//a[contains(text(), "Sign up")]');
     assert.notEqual(signUp, undefined);
 
     // Click the sign up button
@@ -55,11 +55,11 @@ const checkSignUp = async page => {
 export default () => Promise.all([
     fetchHealth('https://www.digitalocean.com/health', '<html><body><h1>200 OK</h1>Service ready.</body></html>'),
     fetchHealth('https://www.digitalocean.com/metrics', '# OK'),
-    browserPage('https://www.digitalocean.com/', checkLogIn),
-    browserPage('https://www.digitalocean.com/', checkSignUp),
+    browserPage('https://www.digitalocean.com/', checkLogIn, false, [ 'consent.trustarc.com' ]),
+    browserPage('https://www.digitalocean.com/', checkSignUp, false, [ 'consent.trustarc.com' ]),
     browserPage('https://www.digitalocean.com/', async page => {
         // Find the menu hamburger button
-        const hamburger  = await page.$('button[class*="Hamburger"]');
+        const hamburger = await page.$('button[aria-label="Menu"]');
         assert.notEqual(hamburger, null);
 
         // Click the menu hamburger button
@@ -67,10 +67,10 @@ export default () => Promise.all([
 
         // Check for the login button
         await checkLogIn(page);
-    }, true),
+    }, true, [ 'consent.trustarc.com' ]),
     browserPage('https://www.digitalocean.com/', async page => {
         // Find the menu hamburger button
-        const hamburger  = await page.$('button[class*="Hamburger"]');
+        const hamburger = await page.$('button[aria-label="Menu"]');
         assert.notEqual(hamburger, null);
 
         // Click the menu hamburger button
@@ -78,5 +78,5 @@ export default () => Promise.all([
 
         // Check for the sign in button
         await checkSignUp(page);
-    }, true),
+    }, true, [ 'consent.trustarc.com' ]),
 ]);

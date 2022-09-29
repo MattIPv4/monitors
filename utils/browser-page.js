@@ -1,6 +1,6 @@
 import puppeteer from 'puppeteer';
 
-export default async (url, callback, mobile = false) => {
+export default async (url, callback, mobile = false, blocked = []) => {
     const browser = await puppeteer.launch(mobile ? {} : { defaultViewport: { width: 1920, height: 1080 } });
     try {
         const pages = await browser.pages();
@@ -14,6 +14,10 @@ export default async (url, callback, mobile = false) => {
 
         // Add no-cache for the navigation requests
         page.on('request', request => {
+            // If a blocked domain is requested, abort the request
+            const domain = new URL(request.url()).hostname;
+            if (blocked.includes(domain)) return request.abort();
+
             // Do nothing in case of non-navigation requests.
             if (!request.isNavigationRequest()) {
                 request.continue();
