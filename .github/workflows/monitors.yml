@@ -30,14 +30,14 @@ jobs:
         run: |
           DISABLED=$(npm run disabled)
           echo $DISABLED
-          echo "::set-output name=disabled::$DISABLED"
+          echo "disabled=$DISABLED" >> $GITHUB_OUTPUT
 
       - name: Set job matrix from located monitors
         id: set-matrix
         run: |
           MONITORS=$(npm run locate)
           echo $MONITORS
-          echo "::set-output name=matrix::{\"monitor\":$MONITORS}"
+          echo "matrix={\"monitor\":$MONITORS}" >> $GITHUB_OUTPUT
 
       - name: Display outputs
         run: |
