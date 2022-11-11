@@ -9,33 +9,18 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      node: ${{ steps.set-node.outputs.node }}
       disabled: ${{ steps.set-disabled.outputs.disabled }}
       matrix: ${{ steps.set-matrix.outputs.matrix }}
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set Node.js version from .nvmrc
-        id: set-node
-        run: |
-          NODE=$(cat .nvmrc)
-          echo $NODE
-          echo "::set-output name=node::$NODE"
+        uses: actions/checkout@v3
 
       - name: Use Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: ${{ steps.set-node.outputs.node }}
-
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          node-version-file: .nvmrc
+          cache: npm
 
       - name: Install NPM dependencies
         run: npm ci
@@ -56,7 +41,7 @@ jobs:
 
       - name: Display outputs
         run: |
-          echo ${{ steps.set-node.outputs.node }}
+          echo ${{ steps.set-disabled.outputs.disabled }}
           echo ${{ steps.set-matrix.outputs.matrix }}
 
   monitor:
@@ -73,22 +58,14 @@ jobs:
     steps:
       - name: Checkout repository
         if: ${{ !contains(fromJson(needs.locate.outputs.disabled), matrix.monitor) }}
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Use Node.js
         if: ${{ !contains(fromJson(needs.locate.outputs.disabled), matrix.monitor) }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: ${{ needs.locate.outputs.node }}
-
-      - name: Cache dependencies
-        if: ${{ !contains(fromJson(needs.locate.outputs.disabled), matrix.monitor) }}
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          node-version-file: .nvmrc
+          cache: npm
 
       - name: Install dependencies
         if: ${{ !contains(fromJson(needs.locate.outputs.disabled), matrix.monitor) }}
