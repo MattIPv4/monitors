@@ -1,4 +1,4 @@
-import puppeteer from 'puppeteer';
+import puppeteer, { KnownDevices } from 'puppeteer';
 
 export default async (url, callback, mobile = false, blocked = []) => {
     const browser = await puppeteer.launch(mobile ? {} : { defaultViewport: { width: 1920, height: 1080 } });
@@ -10,7 +10,7 @@ export default async (url, callback, mobile = false, blocked = []) => {
         await page.setRequestInterception(true);
 
         // Emulate mobile if needed
-        if (mobile) await page.emulate(puppeteer.devices['iPhone 11']);
+        if (mobile) await page.emulate(KnownDevices['iPhone 11']);
 
         // Add no-cache for the navigation requests
         page.on('request', request => {
