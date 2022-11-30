@@ -1,9 +1,9 @@
 import { strict as assert } from 'assert';
 import browserPage from '../utils/browser-page';
 
-export default () => browserPage('https://www.digitalocean.com/community/pages/hub-for-good-projects', async page => {
+export default () => browserPage('https://do-community.github.io/hub-for-good-list/', async page => {
     // Check the initial projects rendered
-    const [ allProjects ] = await page.$x('//div[contains(concat(" ", normalize-space(@class), " "), "hub-for-good-list")]//*[text()[starts-with(normalize-space(.), "All projects")]]');
+    const [ allProjects ] = await page.$x('//div[contains(concat(" ", normalize-space(@class), " "), " hub-for-good-list ")]//*[text()[starts-with(normalize-space(.), "All projects")]]');
     assert.notEqual(allProjects, undefined);
     const allProjectsText = await page.evaluate(element => element.textContent.trim(), allProjects);
     const initialProjects = await page.$$('.hub-for-good-list table tbody tr');
