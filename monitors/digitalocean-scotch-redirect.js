@@ -1,5 +1,5 @@
 import { strict as assert } from 'assert';
-import fetchUncached from '../utils/fetch-uncached.js';
+import { fetchUncached } from '../utils/fetch';
 
 export default async () => {
     const res = await fetchUncached('https://scotch.io', { redirect: 'manual' });

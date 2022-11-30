@@ -1,5 +1,5 @@
 import { strict as assert } from 'assert';
-import fetchUncached from '../utils/fetch-uncached';
+import { fetchUncached } from '../utils/fetch';
 
 export default () => Promise.all([
     (async () => {

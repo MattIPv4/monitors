@@ -1,5 +1,5 @@
 import { strict as assert } from 'assert';
-import fetchJson from './fetch-json';
+import { fetchJson } from './fetch';
 import browserPage from './browser-page';
 
 export default host => Promise.all([

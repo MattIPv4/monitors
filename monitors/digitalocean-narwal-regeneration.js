@@ -1,6 +1,6 @@
 import { strict as assert } from 'assert';
-import fetchHealth from '../utils/fetch-health';
-import fetchUncached from '../utils/fetch-uncached';
+import { fetchHealth } from '../utils/fetch';
+import { fetchUncached } from '../utils/fetch';
 
 export default () => Promise.all([
     fetchHealth('https://www.digitalocean.com/api/regeneration/health'),

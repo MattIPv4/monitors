@@ -1,4 +1,4 @@
-import fetchJson from '../utils/fetch-json';
+import { fetchJson } from '../utils/fetch';
 
 export default () => Promise.all([
     fetchJson('https://metadata.speedcdnjs.com/packages'),
