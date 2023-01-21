@@ -1,6 +1,7 @@
 import gunzip from 'gunzip-maybe';
 import fetch from 'node-fetch';
 import { parse as parseCsv } from 'csv-parse/sync';
+import { extractFromXml as extractRss } from '@extractus/feed-extractor';
 
 export const fetchUncached = (url, opts = {}) => {
     const controller = new AbortController();
@@ -71,3 +72,14 @@ export const fetchCsv = async (url, opts = {}, csvOpts = {})  => {
         throw new Error(`Unexpected endpoint response: ${JSON.stringify(data)}`);
     return data;
 };
+
+export const fetchRss = async (url, opts = {}, rssOpts = {})  => {
+    const body = await fetchBody(url, opts);
+    let data;
+    try {
+        data = await extractRss(body, rssOpts);
+    } catch (_) {}
+    if (data === null || data === undefined || typeof data !== 'object')
+        throw new Error(`Unexpected endpoint response: ${JSON.stringify(data)}`);
+    return data;
+}
