@@ -50,6 +50,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.locate.outputs.matrix) }}
+      max-parallel: 20
 
     runs-on: ubuntu-latest
 
