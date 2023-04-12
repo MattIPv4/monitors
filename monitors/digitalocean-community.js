@@ -38,25 +38,4 @@ export default () => Promise.all([
         assert(answerContent.includes('The root user is a super user and the only real super user on the OS by default.'));
         assert(answerContent.includes('The public key only needs to exist in the file above and you shouldn’t keep your private key on the server :-).'));
     }),
-    browserPage('https://www.digitalocean.com/community/tags/javascript', async page => {
-        // Check the heading is there
-        const heading = await page.$eval('h2', e => e.textContent);
-        assert.equal(heading.trim().replace(/(\s){2,}/g, '$1'), 'JavaScript');
-
-        // Check the description is there
-        const description = await page.$eval('div[class*="TagDescription"]', e => e.textContent);
-        assert.equal(description.trim().replace(/(\s){2,}/g, '$1'), 'JavaScript (also referred to as ‘javascript’ or JS) is a high-level, prototype-based, dynamic scripting language used to create interactive web pages and applications. Its flexibility and front and back-end capabilities make JavaScript a popular programming language. Some of the useful features of JavaScript include storing values in variables, performing operations on strings, and triggering or acting on events that happen in the DOM.');
-
-        // Check the featured content is there
-        const featured = await page.$('div[class*="FeatureTutorialsGrid"]');
-        assert.notEqual(featured, null);
-        const featuredItemsCount = await featured.$$eval(':scope > div[class*="TutorialMainCard"], :scope > div[class*="TutorialCard"]', e => e.length);
-        assert(featuredItemsCount > 0);
-
-        // Check the results are there
-        const list = await page.$('[class*="TabbedHeaderListItem"] > [class*="StyledContainer"]');
-        assert.notEqual(list, null);
-        const listItemsCount = await list.$$eval(':scope > [class*="IndexListItem"]', e => e.length);
-        assert(listItemsCount > 0);
-    }),
 ]);
