@@ -12,6 +12,9 @@ const typeLine = async (page, text) => {
 };
 
 export default () => browserPage('https://www.digitalocean.com/community/tools/glob', async page => {
+    // Wait for all network requests to finish
+    await page.waitForNetworkIdle();
+
     // Check the heading is there
     const heading = await page.$eval('.do-bulma .header h1', e => e.textContent);
     assert.equal(heading.trim(), 'Glob Tool');

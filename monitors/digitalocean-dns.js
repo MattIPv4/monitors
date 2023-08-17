@@ -2,6 +2,9 @@ import { strict as assert } from 'assert';
 import browserPage from '../utils/browser-page';
 
 export default () => browserPage('https://www.digitalocean.com/community/tools/dns', async page => {
+    // Wait for all network requests to finish
+    await page.waitForNetworkIdle();
+
     // Check the heading is there
     const heading = await page.$eval('.do-bulma .landing h1', e => e.textContent);
     assert.equal(heading.trim(), 'DNS Lookup');
