@@ -1,4 +1,4 @@
-import { strict as assert } from 'assert';
+import { strict as assert } from 'node:assert';
 import { fetchJson } from './fetch';
 import browserPage from './browser-page';
 

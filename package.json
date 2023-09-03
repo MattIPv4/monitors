@@ -21,7 +21,6 @@
     "csv-parse": "^5.3.3",
     "gunzip-maybe": "^1.4.2",
     "is-port-reachable": "^4.0.0",
-    "node-fetch": "^3.3.0",
     "pg": "^8.8.0",
     "puppeteer": "^19.2.2",
     "ssh2": "^1.11.0"

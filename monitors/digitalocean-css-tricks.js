@@ -1,4 +1,4 @@
-import { strict as assert } from 'assert';
+import { strict as assert } from 'node:assert';
 import browserPage from '../utils/browser-page.js';
 
 export default () => browserPage('https://css-tricks.com', async page => {

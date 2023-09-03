@@ -1,5 +1,5 @@
 import isPortReachable from 'is-port-reachable';
-import { strict as assert } from 'assert';
+import { strict as assert } from 'node:assert';
 import browserPage from '../utils/browser-page';
 
 export default () => Promise.all([

@@ -1,4 +1,4 @@
-import { strict as assert } from 'assert';
+import { strict as assert } from 'node:assert';
 import { fetchCsv } from '../utils/fetch';
 import cidrRegex from 'cidr-regex';
 

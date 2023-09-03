@@ -1,4 +1,4 @@
-import { strict as assert } from 'assert';
+import { strict as assert } from 'node:assert';
 import browserPage from '../utils/browser-page';
 
 export default () => browserPage('https://www.digitalocean.com/community/tools/bandwidth', async page => {

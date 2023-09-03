@@ -1,4 +1,4 @@
-import { strict as assert } from 'assert';
+import { strict as assert } from 'node:assert';
 import browserPage from '../utils/browser-page';
 
 export default () => browserPage('https://do-community.github.io/hub-for-good-list/', async page => {

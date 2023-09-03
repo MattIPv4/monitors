@@ -1,4 +1,4 @@
-import { strict as assert } from 'assert';
+import { strict as assert } from 'node:assert';
 import { fetchRss } from '../utils/fetch';
 
 const checkRss = async url => {

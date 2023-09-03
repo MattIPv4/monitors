@@ -1,5 +1,5 @@
-import fs from 'fs';
-import { URL } from 'url';
+import fs from 'node:fs';
+import { URL } from 'node:url';
 
 // Get all the monitor files
 const files = fs.readdirSync(new URL('../monitors', import.meta.url), { withFileTypes: true })

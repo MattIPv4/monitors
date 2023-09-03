@@ -1,4 +1,4 @@
-import { strict as assert } from 'assert';
+import { strict as assert } from 'node:assert';
 import browserPage from '../browser-page';
 
 export default host => browserPage(`https://${host}/`, async page => {

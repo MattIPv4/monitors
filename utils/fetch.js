@@ -1,5 +1,4 @@
 import gunzip from 'gunzip-maybe';
-import fetch from 'node-fetch';
 import { parse as parseCsv } from 'csv-parse/sync';
 import { extractFromXml as extractRss } from '@extractus/feed-extractor';
 
@@ -25,7 +24,7 @@ export const fetchUncached = (url, opts = {}) => {
 };
 
 export const fetchHealth = async (url, opts = {}, resp = 'OK') => {
-    const res = await fetchUncached(url);
+    const res = await fetchUncached(url, opts);
     if (!res.ok) throw new Error(`HTTP request failed: ${res.status} ${res.statusText}`);
 
     const text = (await res.text() || '').replace(/[\r\n]/g, '');
@@ -34,21 +33,31 @@ export const fetchHealth = async (url, opts = {}, resp = 'OK') => {
 
 const gunzipBody = body => new Promise((resolve, reject) => {
     const gunzipHandler = gunzip();
-    body.pipe(gunzipHandler);
+
+    // Collect the string
     let string = '';
     gunzipHandler.on('data', (data) => {
         string += data.toString();
-    }).on('end', () => {
+    });
+    
+    // Handle when we're done
+    gunzipHandler.on('end', () => {
         resolve(string);
     }).on('error', (err) => {
         reject(err);
     });
+
+    // Write the body to the handler
+    gunzipHandler.write(body);
 });
 
 export const fetchBody = async (url, opts = {}) => {
     const res = await fetchUncached(url, opts);
     if (!res.ok) throw new Error(`HTTP request failed: ${res.status} ${res.statusText}`);
-    return gunzipBody(res.body);
+    
+    // Run through gunzip for cdnjs-api-metadata
+    const text = await res.text();
+    return gunzipBody(text);
 };
 
 export const fetchJson = async (url, opts = {})  => {

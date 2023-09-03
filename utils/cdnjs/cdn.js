@@ -1,5 +1,5 @@
-import crypto from 'crypto';
-import { strict as assert } from 'assert';
+import crypto from 'node:crypto';
+import { strict as assert } from 'node:assert';
 import { fetchUncached } from '../fetch';
 
 export default async host => {
