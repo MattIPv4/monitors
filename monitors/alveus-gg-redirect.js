@@ -1,5 +1,5 @@
 import { strict as assert } from 'node:assert';
-import { fetchUncached } from '../utils/fetch';
+import { fetchUncached } from '../utils/fetch.js';
 
 export default async () => {
     const res = await fetchUncached('https://alveus.gg', { redirect: 'manual' });

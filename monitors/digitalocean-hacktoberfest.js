@@ -1,5 +1,5 @@
 import { strict as assert } from 'node:assert';
-import browserPage from '../utils/browser-page';
+import browserPage from '../utils/browser-page.js';
 
 export default () => browserPage('https://hacktoberfest.com/', async page => {
     // Check page title

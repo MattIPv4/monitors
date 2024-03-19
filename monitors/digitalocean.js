@@ -1,6 +1,6 @@
 import { strict as assert } from 'node:assert';
-import { fetchHealth } from '../utils/fetch';
-import browserPage from '../utils/browser-page';
+import { fetchHealth } from '../utils/fetch.js';
+import browserPage from '../utils/browser-page.js';
 
 const checkLogIn = async page => {
     // Find the navbar login button

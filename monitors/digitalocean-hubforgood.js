@@ -1,5 +1,5 @@
 import { strict as assert } from 'node:assert';
-import browserPage from '../utils/browser-page';
+import browserPage from '../utils/browser-page.js';
 
 export default () => browserPage('https://do-community.github.io/hub-for-good-list/', async page => {
     // Check the initial projects rendered

@@ -1,6 +1,6 @@
 import { strict as assert } from 'node:assert';
-import { fetchJson } from './fetch';
-import browserPage from './browser-page';
+import { fetchJson } from './fetch.js';
+import browserPage from './browser-page.js';
 
 export default host => Promise.all([
     browserPage(`https://${host}/`, async page => {

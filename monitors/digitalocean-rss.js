@@ -1,5 +1,5 @@
 import { strict as assert } from 'node:assert';
-import { fetchRss } from '../utils/fetch';
+import { fetchRss } from '../utils/fetch.js';
 
 const checkRss = async url => {
     const data = await fetchRss(url);

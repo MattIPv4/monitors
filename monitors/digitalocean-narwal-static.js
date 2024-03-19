@@ -1,6 +1,5 @@
 import { strict as assert } from 'node:assert';
-import { fetchHealth } from '../utils/fetch';
-import { fetchJson } from '../utils/fetch';
+import { fetchHealth, fetchJson } from '../utils/fetch.js';
 
 export default () => Promise.all([
     fetchHealth('https://www.digitalocean.com/api/static-content/health'),

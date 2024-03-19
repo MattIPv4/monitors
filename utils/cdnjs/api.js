@@ -1,4 +1,4 @@
-import { fetchJson } from '../fetch';
+import { fetchJson } from '../fetch.js';
 
 export default (host, lib = 'vue') => Promise.all([
     fetchJson(`https://${host}/libraries`),

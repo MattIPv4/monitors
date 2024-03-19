@@ -1,5 +1,5 @@
 import { strict as assert } from 'node:assert';
-import browserPage from '../browser-page';
+import browserPage from '../browser-page.js';
 
 export default host => browserPage(`https://${host}/`, async page => {
     // Check the heading is there

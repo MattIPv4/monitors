@@ -1,5 +1,5 @@
 import { strict as assert } from 'node:assert';
-import browserPage from '../utils/browser-page';
+import browserPage from '../utils/browser-page.js';
 
 export default () => browserPage('https://www.digitalocean.com/community/tools/dns', async page => {
     // Wait for all network requests to finish

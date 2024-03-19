@@ -1,6 +1,6 @@
 import isPortReachable from 'is-port-reachable';
 import { strict as assert } from 'node:assert';
-import browserPage from '../utils/browser-page';
+import browserPage from '../utils/browser-page.js';
 
 export default () => Promise.all([
     isPortReachable(8080, { host: 'iona.s.mattcowley.co.uk' }),

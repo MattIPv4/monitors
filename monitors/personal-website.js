@@ -1,5 +1,5 @@
 import { strict as assert } from 'node:assert';
-import browserPage from '../utils/browser-page';
+import browserPage from '../utils/browser-page.js';
 
 export default () => browserPage('https://mattcowley.co.uk', async page => {
     // Check the heading is there

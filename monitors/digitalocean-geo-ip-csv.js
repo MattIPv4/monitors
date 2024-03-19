@@ -1,6 +1,6 @@
 import { strict as assert } from 'node:assert';
-import { fetchCsv } from '../utils/fetch';
 import cidrRegex from 'cidr-regex';
+import { fetchCsv } from '../utils/fetch.js';
 
 export default async () => {
     const data = await fetchCsv('https://www.digitalocean.com/geo/google.csv');

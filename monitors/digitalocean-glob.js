@@ -1,5 +1,5 @@
 import { strict as assert } from 'node:assert';
-import browserPage from '../utils/browser-page';
+import browserPage from '../utils/browser-page.js';
 
 const clearInput = async page => {
     await page.evaluate(() => document.execCommand('selectAll', false, null));

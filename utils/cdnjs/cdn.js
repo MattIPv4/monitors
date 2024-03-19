@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
 import { strict as assert } from 'node:assert';
-import { fetchUncached } from '../fetch';
+import { fetchUncached } from '../fetch.js';
 
 export default async host => {
     const res = await fetchUncached(`https://${host}/ajax/libs/vue/3.0.5/vue.cjs.js`);

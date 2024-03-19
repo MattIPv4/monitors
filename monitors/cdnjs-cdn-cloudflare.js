@@ -1,3 +1,3 @@
-import cdn from '../utils/cdnjs/cdn';
+import cdn from '../utils/cdnjs/cdn.js';
 
 export default () => cdn('cdnjs.cloudflare.com');
