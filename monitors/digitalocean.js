@@ -4,7 +4,12 @@ import browserPage from '../utils/browser-page.js';
 
 const checkLogIn = async page => {
     // Find the navbar login button
-    const [ logIn ] = await page.$$('xpath/.//nav//ul[not(@aria-label="Main")]//a[contains(text(), "Log in")]');
+    const [ logIn ] = await page.$$('xpath/.//header//a[contains(text(), "Log in")]')
+        .then(buttons => Promise.all(buttons.map(async button => {
+            const visible = await button.isVisible();
+            if (visible) return button;
+        }))
+        .then(buttons => buttons.filter(button => button !== undefined)));
     assert.notEqual(logIn, undefined);
 
     // Click the login button
@@ -29,7 +34,12 @@ const checkLogIn = async page => {
 
 const checkSignUp = async page => {
     // Find the navbar sign up button
-    const [ signUp ] = await page.$$('xpath/.//nav//ul[not(@aria-label="Main")]//a[contains(text(), "Sign up")]');
+    const [ signUp ] = await page.$$('xpath/.//header//a[contains(text(), "Sign up")]')
+        .then(buttons => Promise.all(buttons.map(async button => {
+            const visible = await button.isVisible();
+            if (visible) return button;
+        }))
+        .then(buttons => buttons.filter(button => button !== undefined)));
     assert.notEqual(signUp, undefined);
 
     // Click the sign up button
@@ -70,7 +80,7 @@ export default () => Promise.all([
     }, true, [ 'consent.trustarc.com' ]),
     browserPage('https://www.digitalocean.com/', async page => {
         // Find the menu hamburger button
-        const hamburger = await page.$('button[aria-label="Menu"]');
+        const hamburger = await page.$('header button[aria-label="Menu"]');
         assert.notEqual(hamburger, null);
 
         // Click the menu hamburger button
