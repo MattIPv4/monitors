@@ -4,11 +4,9 @@ import browserPage from '../utils/browser-page.js';
 
 export default () => Promise.all([
     isPortReachable(8080, { host: 'iona.s.mattcowley.co.uk' }),
-    browserPage('http://iona.s.mattcowley.co.uk:8080', async (page, response) => {
+    browserPage('http://iona.s.mattcowley.co.uk:8080', async page => {
         // Check it redirects to login
-        const chain = response.request().redirectChain();
-        assert.equal(chain.length, 1);
-        assert.equal(chain[0].frame().url(), 'http://iona.s.mattcowley.co.uk:8080/login');
+        assert.equal(page.url(), 'http://iona.s.mattcowley.co.uk:8080/login');
 
         // Wait for the login page to load
         await page.waitForSelector('h1', { timeout: 5000 });

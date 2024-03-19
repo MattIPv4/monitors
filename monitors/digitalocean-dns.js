@@ -1,4 +1,5 @@
 import { strict as assert } from 'node:assert';
+import { setTimeout } from 'node:timers/promises';
 import browserPage from '../utils/browser-page.js';
 
 export default () => browserPage('https://www.digitalocean.com/community/tools/dns', async page => {
@@ -17,7 +18,7 @@ export default () => browserPage('https://www.digitalocean.com/community/tools/d
     await page.click('.do-bulma .landing .button');
 
     // Allow the results to load
-    await page.waitForTimeout(1500);
+    await setTimeout(1500);
 
     // Check the A records title is present
     const aRecordsTitle = await page.$('.do-bulma .container #A-Records');

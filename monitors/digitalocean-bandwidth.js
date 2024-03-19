@@ -1,4 +1,5 @@
 import { strict as assert } from 'node:assert';
+import { setTimeout } from 'node:timers/promises';
 import browserPage from '../utils/browser-page.js';
 
 export default () => browserPage('https://www.digitalocean.com/community/tools/bandwidth', async page => {
@@ -17,7 +18,7 @@ export default () => browserPage('https://www.digitalocean.com/community/tools/b
     const [ dropletPanel ] = await page.$$('.picker .panel-list .panel.is-droplet');
     assert.notEqual(dropletPanel, null);
     await page.evaluate(element => element.scrollIntoView({ behavior: 'smooth', block: 'center' }), dropletPanel);
-    await page.waitForTimeout(500);
+    await setTimeout(500);
 
     // Add the Droplet
     await dropletPanel.click();

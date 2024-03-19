@@ -1,4 +1,4 @@
-import consola from 'consola';
+import { consola } from 'consola';
 
 // Show any error and then exit
 const error = (msg, err) => {

@@ -4,7 +4,7 @@ import browserPage from '../utils/browser-page.js';
 
 const checkLogIn = async page => {
     // Find the navbar login button
-    const [ logIn ] = await page.$x('//nav//ul[not(@aria-label="Main")]//a[contains(text(), "Log in")]');
+    const [ logIn ] = await page.$$('xpath/.//nav//ul[not(@aria-label="Main")]//a[contains(text(), "Log in")]');
     assert.notEqual(logIn, undefined);
 
     // Click the login button
@@ -29,7 +29,7 @@ const checkLogIn = async page => {
 
 const checkSignUp = async page => {
     // Find the navbar sign up button
-    const [ signUp ] = await page.$x('//nav//ul[not(@aria-label="Main")]//a[contains(text(), "Sign up")]');
+    const [ signUp ] = await page.$$('xpath/.//nav//ul[not(@aria-label="Main")]//a[contains(text(), "Sign up")]');
     assert.notEqual(signUp, undefined);
 
     // Click the sign up button

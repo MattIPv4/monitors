@@ -14,14 +14,14 @@
   "author": "Matt (IPv4) Cowley",
   "license": "Apache-2.0",
   "dependencies": {
-    "@extractus/feed-extractor": "^6.2.1",
-    "cidr-regex": "^4.0.2",
-    "consola": "^2.15.3",
-    "csv-parse": "^5.3.3",
+    "@extractus/feed-extractor": "^7.0.9",
+    "cidr-regex": "^4.0.3",
+    "consola": "^3.2.3",
+    "csv-parse": "^5.5.5",
     "gunzip-maybe": "^1.4.2",
     "is-port-reachable": "^4.0.0",
-    "pg": "^8.8.0",
-    "puppeteer": "^19.2.2",
-    "ssh2": "^1.11.0"
+    "pg": "^8.11.3",
+    "puppeteer": "^22.5.0",
+    "ssh2": "^1.15.0"
   }
 }
