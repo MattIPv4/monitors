@@ -1,11 +1,18 @@
 import { consola } from 'consola';
 
+const formatError = (err) => {
+    if (err instanceof Error) {
+        return `[${err.code}] ${err.message}:\n${err.stack.split('\n').slice(1).join('\n')}`;
+    }
+    return `${err}`;
+};
+
 const error = (msg, err) => {
     consola.fatal(msg);
 
     if (err) {
-        consola.error(err);
-        if (err.cause) consola.error(err.cause);
+        consola.error(formatError(err));
+        if (err.cause) consola.error(formatError(err.cause));
     }
 
     process.exit(1);
@@ -15,8 +22,8 @@ const warn = (msg, err) => {
     consola.warn(msg);
 
     if (err) {
-        consola.warn(err);
-        if (err.cause) consola.warn(err.cause);
+        consola.warn(formatError(err));
+        if (err.cause) consola.warn(formatError(err.cause));
     }
 }
 
