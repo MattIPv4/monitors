@@ -1,11 +1,24 @@
 import { consola } from 'consola';
 
-// Show any error and then exit
 const error = (msg, err) => {
     consola.fatal(msg);
-    if (err) consola.error(err);
+
+    if (err) {
+        consola.error(err);
+        if (err.cause) consola.error(err.cause);
+    }
+
     process.exit(1);
 };
+
+const warn = (msg, err) => {
+    consola.warn(msg);
+
+    if (err) {
+        consola.warn(err);
+        if (err.cause) consola.warn(err.cause);
+    }
+}
 
 // Import a monitor module
 const loadMonitor = async name => {
@@ -38,8 +51,7 @@ const main = async () => {
         await runMonitor(name);
         return;
     } catch (err) {
-        consola.warn('Failed to run');
-        consola.warn(err);
+        warn('Failed to run', err);
     }
 
     // If that failed, wait 30s and try again
