@@ -2,7 +2,7 @@ import { consola } from 'consola';
 
 const formatError = (err) => {
     if (err instanceof Error) {
-        return `[${err.code}] ${err.message}:\n${err.stack.split('\n').slice(1).join('\n')}`;
+        return `[${err.code || 'N/A'}] ${err.message || 'N/A'}:\n${err.stack.split('\n').slice(1).join('\n')}`;
     }
     return `${err}`;
 };
