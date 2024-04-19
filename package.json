@@ -18,6 +18,7 @@
     "cidr-regex": "^4.0.3",
     "consola": "^3.2.3",
     "csv-parse": "^5.5.5",
+    "dns-over-tls": "^0.0.9",
     "gunzip-maybe": "^1.4.2",
     "is-port-reachable": "^4.0.0",
     "pg": "^8.11.3",
