@@ -63,6 +63,12 @@ jobs:
         # Fixes networking fetch instability
         run: sudo ethtool -K eth0 tx off rx off
 
+      - name: Disable AppArmor
+        if: ${{ !contains(fromJson(needs.locate.outputs.disabled), matrix.monitor) }}
+        # https://github.com/puppeteer/puppeteer/pull/13196
+        # Fixes Puppeteer sandboxing being blocked
+        run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
+
       - name: Checkout repository
         if: ${{ !contains(fromJson(needs.locate.outputs.disabled), matrix.monitor) }}
         uses: actions/checkout@v4
