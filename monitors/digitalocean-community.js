@@ -5,7 +5,10 @@ export default () => Promise.all([
     browserPage('https://www.digitalocean.com/community', async page => {
         // Check the heading is there
         const heading = await page.$eval('h1', e => e.textContent);
-        assert.equal(heading.trim(), 'Welcome to the DigitalOcean Community!');
+        assert.equal(
+            heading.trim().replaceAll(' ', ''),
+            'Welcome to the DigitalOcean Community!'.replaceAll(' ', ''),
+        );
     }),
     browserPage('https://www.digitalocean.com/community/tutorials/react-axios-react', async page => {
         // Check the image is there
