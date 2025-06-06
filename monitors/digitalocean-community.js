@@ -11,18 +11,18 @@ export default () => Promise.all([
         );
     }),
     browserPage('https://www.digitalocean.com/community/tutorials/react-axios-react', async page => {
-        // Check the image is there
-        const image = await page.$('img[class*="RecordHeaderImage"]');
-        assert.notEqual(image, null);
-        const imageBox = await image.boundingBox();
-        assert.notEqual(imageBox, null);
-
         // Check the heading is there
         const heading = await page.$eval('h1', e => e.textContent);
         assert.equal(heading.trim().replace(/(\s){2,}/g, '$1'), 'How To Use Axios with React');
 
+        // Check the image is there
+        const image = await page.$('div[class*="TutorialContent"] img[alt="How To Use Axios with React"]');
+        assert.notEqual(image, null);
+        const imageBox = await image.boundingBox();
+        assert.notEqual(imageBox, null);
+
         // Check the content is there
-        const content = await page.$eval('div[class*="Markdown"]', e => e.textContent);
+        const content = await page.$eval('div[class*="TutorialContent"] div[class*="Markdown"]', e => e.textContent);
         assert(content.includes('Step 1 — Adding Axios to the Project'));
         assert(content.includes('In this step, you will use Axios with another HTTP request method called POST.'));
     }),
@@ -32,7 +32,7 @@ export default () => Promise.all([
         assert.equal(heading.trim().replace(/(\s){2,}/g, '$1'), 'Ubuntu 16.04 - Creating New User and Adding SSH Keys');
 
         // Check the question is there
-        const questionContent = await page.$eval('div[class*="RecordBody"] div[class*="Markdown"]', e => e.textContent);
+        const questionContent = await page.$eval('div[class*="QuestionContent"] div[class*="Markdown"]', e => e.textContent);
         assert(questionContent.includes('I am following the tutorial to add an SSL certificate to the Ubuntu 16.04 droplet'));
         assert(questionContent.includes('Any help to point me in the right direction would be great!'));
 
