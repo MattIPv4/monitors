@@ -11,13 +11,12 @@ export default () => Promise.all([
         // Get the error data
         const data = await res.json();
 
-        // Check we get the expected error keys
-        assert.equal(Object.keys(data).length, 2);
-        assert('code' in data);
-        assert('message' in data);
 
         // Check we get the expected error message
-        assert.equal(data.code, 'InvalidCredentials');
+        assert.equal(Object.keys(data).length, 4);
+        assert.equal(data.statusCode, 401);
+        assert.equal(data.code, 'HTTP_ERROR_UNAUTHORIZED');
+        assert.equal(data.error, 'Unauthorized');
         assert.equal(data.message, 'Expected Authorization header');
     })(),
 ]);
