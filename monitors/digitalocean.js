@@ -66,8 +66,8 @@ export default () => Promise.all([
     fetchHealth('https://www.digitalocean.com/health')
         .catch(() => fetchHealth('https://www.digitalocean.com/health', {}, '<html><body><h1>200 OK</h1>Service ready.</body></html>')),
     fetchHealth('https://www.digitalocean.com/metrics', {}, '# OK'),
-    browserPage('https://www.digitalocean.com/', checkLogIn, false, [ 'consent.trustarc.com' ]),
-    browserPage('https://www.digitalocean.com/', checkSignUp, false, [ 'consent.trustarc.com' ]),
+    browserPage('https://www.digitalocean.com/', checkLogIn, false, [ 'consent.trustarc.com', 'cdn.amplitude.com' ]),
+    browserPage('https://www.digitalocean.com/', checkSignUp, false, [ 'consent.trustarc.com', 'cdn.amplitude.com' ]),
     browserPage('https://www.digitalocean.com/', async page => {
         // Find the menu hamburger button
         const hamburger = await page.$('button[aria-label="Menu"]');
@@ -78,7 +78,7 @@ export default () => Promise.all([
 
         // Check for the login button
         await checkLogIn(page);
-    }, true, [ 'consent.trustarc.com' ]),
+    }, true, [ 'consent.trustarc.com', 'cdn.amplitude.com' ]),
     browserPage('https://www.digitalocean.com/', async page => {
         // Find the menu hamburger button
         const hamburger = await page.$('header button[aria-label="Menu"]');
@@ -89,5 +89,5 @@ export default () => Promise.all([
 
         // Check for the sign in button
         await checkSignUp(page);
-    }, true, [ 'consent.trustarc.com' ]),
+    }, true, [ 'consent.trustarc.com', 'cdn.amplitude.com' ]),
 ]);
