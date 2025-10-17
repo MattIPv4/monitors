@@ -1,19 +1,21 @@
 import { strict as assert } from 'node:assert';
 import browserPage from '../utils/browser-page.js';
 
+const normalizeWhitespace = str => str.trim().replace(/\n/g, ' ').replace(/(\s){2,}/g, '$1');
+
 export default () => Promise.all([
     browserPage('https://www.digitalocean.com/community', async page => {
         // Check the heading is there
         const heading = await page.$eval('h1', e => e.textContent);
         assert.equal(
-            heading.trim().replaceAll(' ', ''),
-            'Welcome to the DigitalOcean Community!'.replaceAll(' ', ''),
+            normalizeWhitespace(heading),
+            'Explore the latest from DigitalOcean\'s community and learning materials.',
         );
     }),
     browserPage('https://www.digitalocean.com/community/tutorials/react-axios-react', async page => {
         // Check the heading is there
         const heading = await page.$eval('h1', e => e.textContent);
-        assert.equal(heading.trim().replace(/(\s){2,}/g, '$1'), 'How To Use Axios with React');
+        assert.equal(normalizeWhitespace(heading), 'How To Use Axios with React');
 
         // Check the image is there
         const image = await page.$('div[class*="TutorialContent"] img[alt="How To Use Axios with React"]');
@@ -29,7 +31,7 @@ export default () => Promise.all([
     browserPage('https://www.digitalocean.com/community/questions/ubuntu-16-04-creating-new-user-and-adding-ssh-keys', async page => {
         // Check the heading is there
         const heading = await page.$eval('h1', e => e.textContent);
-        assert.equal(heading.trim().replace(/(\s){2,}/g, '$1'), 'Ubuntu 16.04 - Creating New User and Adding SSH Keys');
+        assert.equal(normalizeWhitespace(heading), 'Ubuntu 16.04 - Creating New User and Adding SSH Keys');
 
         // Check the question is there
         const questionContent = await page.$eval('div[class*="QuestionContent"] div[class*="Markdown"]', e => e.textContent);
