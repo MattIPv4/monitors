@@ -38,10 +38,18 @@ export default async (url, callback, mobile = false, blocked = []) => {
             request.continue({ headers });
         });
 
-        // Make the page request, check response, and run the callback
+        // Make the page request and check response
         const response = await page.goto(url, { waitUntil: 'domcontentloaded' });
         if (!response.ok()) throw new Error(`HTTP request failed: ${response.status()} ${response.statusText()}`);
-        await callback(page, response);
+
+        // Run the callback and screenshot on error
+        try {
+            await callback(page, response);
+        } catch (err) {
+            const screenshot = await page.screenshot({ fullPage: true });
+            console.error(`data:image/png;base64,${screenshot.toString('base64')}`);
+            throw err;
+        }
     } finally {
         // Close the browser
         await browser.close();
