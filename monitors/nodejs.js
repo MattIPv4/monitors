@@ -10,7 +10,7 @@ export default () => Promise.all([
         // Check there is a Download item in the nav
         const download = await page.$('xpath/.//nav//a[.//text()[contains(., "Download")]]');
         assert.notEqual(download, null);
-        assert.ok(await download.boundingBox());
+        assert.ok(await download.isVisible());
         assert.equal(await download.evaluate(e => e.getAttribute('href')), '/en/download');
 
         // Check the heading is there
@@ -21,16 +21,21 @@ export default () => Promise.all([
         );
 
         // Check the get Node.js button is there
-        const get = await page.$('xpath/.//main//a[.//text()[contains(., "Get Node.js")]]');
-        assert.notEqual(get, null);
-        assert.ok(await get.boundingBox());
+        // Find all matching buttons and filter to visible as there are separate light/dark ones
+        const [ get ] = await page.$$('xpath/.//main//a[.//text()[contains(., "Get Node.js")]]')
+        .then(buttons => Promise.all(buttons.map(async button => {
+            const visible = await button.isVisible();
+            if (visible) return button;
+        }))
+        .then(buttons => buttons.filter(button => button !== undefined)));
+        assert.notEqual(get, undefined);
         assert.equal(await get.evaluate(e => e.getAttribute('href')), '/en/download');
     }),
     browserPage('https://nodejs.org/en/download', async page => {
         // Check that an LTS version is offered
         const version = await page.$('xpath/.//main//button[@aria-label[contains(., "Version")]]');
         assert.notEqual(version, null);
-        assert.ok(await version.boundingBox());
+        assert.ok(await version.isVisible());
         const text = await version.evaluate(e => e.textContent).then(normalizeWhitespace);
         assert.match(text, /v\d+\.\d+\.\d+ \(LTS\)/);
     }),
@@ -38,7 +43,7 @@ export default () => Promise.all([
         // Check that a Current version is offered
         const version = await page.$('xpath/.//main//button[@aria-label[contains(., "Version")]]');
         assert.notEqual(version, null);
-        assert.ok(await version.boundingBox());
+        assert.ok(await version.isVisible());
         const text = await version.evaluate(e => e.textContent).then(normalizeWhitespace);
         assert.match(text, /v\d+\.\d+\.\d+ \(Current\)/);
     }),
