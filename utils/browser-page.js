@@ -1,5 +1,11 @@
 import puppeteer, { KnownDevices } from 'puppeteer';
 
+/**
+ * @param {string} url The URL to open.
+ * @param {(page: import('puppeteer').Page, response: import('puppeteer').HTTPResponse) => Promise<void>} callback The callback to run once the page is loaded.
+ * @param {boolean} [mobile=false] Whether to emulate a mobile device.
+ * @param {string[]} [blocked=[]] An array of domain names to block.
+ */
 export default async (url, callback, mobile = false, blocked = []) => {
     const browser = await puppeteer.launch(mobile ? {} : { defaultViewport: { width: 1920, height: 1080 } });
     try {
