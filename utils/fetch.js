@@ -28,7 +28,8 @@ export const fetchHealth = async (url, opts = {}, resp = 'OK') => {
     if (!res.ok) throw new Error(`HTTP request failed: ${res.status} ${res.statusText}`);
 
     const text = (await res.text() || '').replace(/[\r\n]/g, '');
-    if (text !== resp) throw new Error(`Unexpected health check response: ${text}`);
+    if (resp instanceof RegExp ? !resp.test(text) : text !== resp)
+        throw new Error(`Unexpected endpoint response: ${text}`);
 };
 
 const gunzipBody = body => new Promise((resolve, reject) => {
