@@ -3,8 +3,8 @@ import { setTimeout } from 'node:timers/promises';
 import browserPage from '../utils/browser-page.js';
 
 export default () => browserPage('https://www.digitalocean.com/community/tools/dns', async page => {
-    // Wait for all network requests to finish
-    await page.waitForNetworkIdle();
+    // Wait for the embedded web app to load
+    await page.waitForSelector('.do-bulma');
 
     // Check the heading is there
     const heading = await page.$eval('.do-bulma .landing h1', e => e.textContent);

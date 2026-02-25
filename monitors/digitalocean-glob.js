@@ -12,8 +12,8 @@ const typeLine = async (page, text) => {
 };
 
 export default () => browserPage('https://www.digitalocean.com/community/tools/glob', async page => {
-    // Wait for all network requests to finish
-    await page.waitForNetworkIdle();
+    // Wait for the embedded web app to load
+    await page.waitForSelector('.do-bulma');
 
     // Check the heading is there
     const heading = await page.$eval('.do-bulma .header h1', e => e.textContent);
