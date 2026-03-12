@@ -1,9 +1,21 @@
 import { strict as assert } from 'node:assert';
-import { fetchHealth } from '../utils/fetch.js';
 import browserPage from '../utils/browser-page.js';
+import { fetchHealth } from '../utils/fetch.js';
+
+const openMenu = async page => {
+    // Find the menu hamburger button
+    const hamburger = await page.$('button[aria-label="Menu"]');
+    assert.notEqual(hamburger, null);
+
+    // Click the menu hamburger button
+    await hamburger.click();
+
+    // Wait for additional assets to load for the menu
+    await page.waitForNetworkIdle();
+};
 
 const checkLogIn = async page => {
-    // Find the navbar login button
+    // Click the navbar login button
     const [ logIn ] = await page.$$('xpath/.//header//a[contains(text(), "Log in")]')
         .then(buttons => Promise.all(buttons.map(async button => {
             const visible = await button.isVisible();
@@ -33,7 +45,7 @@ const checkLogIn = async page => {
 };
 
 const checkSignUp = async page => {
-    // Find the navbar sign up button
+    // Click the navbar sign up button
     const [ signUp ] = await page.$$('xpath/.//header//a[contains(text(), "Sign up")]')
         .then(buttons => Promise.all(buttons.map(async button => {
             const visible = await button.isVisible();
@@ -67,25 +79,11 @@ export default () => Promise.all([
     browserPage('https://www.digitalocean.com/', checkLogIn, false, [ 'consent.trustarc.com', 'cdn.amplitude.com' ]),
     browserPage('https://www.digitalocean.com/', checkSignUp, false, [ 'consent.trustarc.com', 'cdn.amplitude.com' ]),
     browserPage('https://www.digitalocean.com/', async page => {
-        // Find the menu hamburger button
-        const hamburger = await page.$('button[aria-label="Menu"]');
-        assert.notEqual(hamburger, null);
-
-        // Click the menu hamburger button
-        await hamburger.click();
-
-        // Check for the login button
+        await openMenu(page);
         await checkLogIn(page);
     }, true, [ 'consent.trustarc.com', 'cdn.amplitude.com' ]),
     browserPage('https://www.digitalocean.com/', async page => {
-        // Find the menu hamburger button
-        const hamburger = await page.$('header button[aria-label="Menu"]');
-        assert.notEqual(hamburger, null);
-
-        // Click the menu hamburger button
-        await hamburger.click();
-
-        // Check for the sign in button
+        await openMenu(page);
         await checkSignUp(page);
     }, true, [ 'consent.trustarc.com', 'cdn.amplitude.com' ]),
 ]);
