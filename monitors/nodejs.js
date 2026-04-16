@@ -37,7 +37,7 @@ export default () => Promise.all([
         assert.notEqual(version, null);
         assert.ok(await version.isVisible());
         const text = await version.evaluate(e => e.textContent).then(normalizeWhitespace);
-        assert.match(text, /v\d+\.\d+\.\d+ \(LTS\)/);
+        assert.match(text, /^v\d+\.\d+\.\d+\s*LTS$/);
     }),
     browserPage('https://nodejs.org/en/download/current', async page => {
         // Check that a Current version is offered
@@ -45,6 +45,6 @@ export default () => Promise.all([
         assert.notEqual(version, null);
         assert.ok(await version.isVisible());
         const text = await version.evaluate(e => e.textContent).then(normalizeWhitespace);
-        assert.match(text, /v\d+\.\d+\.\d+ \(Current\)/);
+        assert.match(text, /^v\d+\.\d+\.\d+\s*Current$/);
     }),
 ]);
