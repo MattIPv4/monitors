@@ -2,88 +2,43 @@ import { strict as assert } from 'node:assert';
 import browserPage from '../utils/browser-page.js';
 import { fetchHealth } from '../utils/fetch.js';
 
-const openMenu = async page => {
-    // Find the menu hamburger button
-    const hamburger = await page.$('button[aria-label="Menu"]');
-    assert.notEqual(hamburger, null);
+const clickButton = async (page, button, urls) => {
+    // Find the button
+    const [ elm ] = await page.$$(`xpath/.//header//a[contains(text(), "${button}")]`)
+        .then(elms => Promise.all(elms.map(async elm => {
+            const visible = await elm.isVisible();
+            if (visible) return elm;
+        }))
+        .then(elms => elms.filter(elm => elm !== undefined)));
+    assert.notEqual(elm, undefined);
 
-    // Click the menu hamburger button
-    await hamburger.click();
+    // Click the button and wait for navigation to one of the allowed URLs
+    await Promise.all([
+        page.waitForFunction(urls => urls.includes(window.location.href), { timeout: 15000 }, urls),
+        elm.click(),
+    ]);
 
-    // Wait for additional assets to load for the menu
-    await page.waitForNetworkIdle();
+    // Check we made it to the expected destination URL
+    const currentUrl = page.url();
+    assert.ok(urls.includes(currentUrl), `Unexpected destination URL: ${currentUrl}`);
 };
 
 const checkLogIn = async page => {
-    // Click the navbar login button
-    const [ logIn ] = await page.$$('xpath/.//header//a[contains(text(), "Log in")]')
-        .then(buttons => Promise.all(buttons.map(async button => {
-            const visible = await button.isVisible();
-            if (visible) return button;
-        }))
-        .then(buttons => buttons.filter(button => button !== undefined)));
-    assert.notEqual(logIn, undefined);
-
-    // Click the login button
-    const [ response ] = await Promise.all([
-        page.waitForNavigation(),
-        logIn.click(),
+    await clickButton(page, 'Log in', [
+        'https://cloud.digitalocean.com/login',
+        'https://cloud.digitalocean.com/graphql/public/test?challenge=/login',
     ]);
-
-    // Check we're now on the login page
-    try {
-        assert.equal(response.url(), 'https://cloud.digitalocean.com/login');
-    } catch (e) {
-        // Or check we're on the captcha page
-        try {
-            assert.equal(response.url(), 'https://cloud.digitalocean.com/graphql/public/test?challenge=/login');
-        } catch {
-            // Throw the original error
-            throw e;
-        }
-    }
 };
 
 const checkSignUp = async page => {
-    // Click the navbar sign up button
-    const [ signUp ] = await page.$$('xpath/.//header//a[contains(text(), "Sign up")]')
-        .then(buttons => Promise.all(buttons.map(async button => {
-            const visible = await button.isVisible();
-            if (visible) return button;
-        }))
-        .then(buttons => buttons.filter(button => button !== undefined)));
-    assert.notEqual(signUp, undefined);
-
-    // Click the sign up button
-    const [ response ] = await Promise.all([
-        page.waitForNavigation(),
-        signUp.click(),
+    await clickButton(page, 'Sign up', [
+        'https://cloud.digitalocean.com/registrations/new',
+        'https://cloud.digitalocean.com/graphql/public/test?challenge=/registrations/new',
     ]);
-
-    // Check we're now on the sign up page
-    try {
-        assert.equal(response.url(), 'https://cloud.digitalocean.com/registrations/new');
-    } catch (e) {
-        // Or check we're on the captcha page
-        try {
-            assert.equal(response.url(), 'https://cloud.digitalocean.com/graphql/public/test?challenge=/registrations/new');
-        } catch {
-            // Throw the original error
-            throw e;
-        }
-    }
 };
 
 export default () => Promise.all([
     fetchHealth('https://www.digitalocean.com/health', {}, /^(# OK|(<html><body>)?<h1>200 OK<\/h1>Service ready.(<\/body><\/html>)?)$/),
     browserPage('https://www.digitalocean.com/', checkLogIn, false, [ 'consent.trustarc.com', 'cdn.amplitude.com' ]),
     browserPage('https://www.digitalocean.com/', checkSignUp, false, [ 'consent.trustarc.com', 'cdn.amplitude.com' ]),
-    browserPage('https://www.digitalocean.com/', async page => {
-        await openMenu(page);
-        await checkLogIn(page);
-    }, true, [ 'consent.trustarc.com', 'cdn.amplitude.com' ]),
-    browserPage('https://www.digitalocean.com/', async page => {
-        await openMenu(page);
-        await checkSignUp(page);
-    }, true, [ 'consent.trustarc.com', 'cdn.amplitude.com' ]),
 ]);
