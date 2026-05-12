@@ -85,5 +85,14 @@ jobs:
         run: npm ci
 
       - name: Run monitor
+        id: run-monitor
         if: ${{ !contains(fromJson(needs.locate.outputs.disabled), matrix.monitor) }}
         run: npm run monitor -- ${{ matrix.monitor }}
+
+      - name: Upload screenshots
+        if: ${{ always() && steps.run-monitor.outcome == 'failure' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ matrix.monitor }}-screenshots
+          path: screenshots
+          if-no-files-found: warn

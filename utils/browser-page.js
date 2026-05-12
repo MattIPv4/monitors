@@ -1,3 +1,4 @@
+import { mkdir } from 'fs/promises';
 import puppeteer, { KnownDevices } from 'puppeteer';
 
 /**
@@ -46,8 +47,8 @@ export default async (url, callback, mobile = false, blocked = []) => {
         try {
             await callback(page, response);
         } catch (err) {
-            const screenshot = await page.screenshot({ fullPage: true });
-            console.error(`data:image/png;base64,${screenshot.toString('base64')}`);
+            await mkdir('screenshots', { recursive: true });
+            await page.screenshot({ fullPage: true, path: `screenshots/${new Date().toISOString().replace(/[:.]/g, '-')}-${url.replace(/[^a-z0-9_-]/gi, '_').replace(/_+/g, '_')}.png` });
             throw err;
         }
     } finally {
