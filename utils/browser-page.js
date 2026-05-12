@@ -47,8 +47,12 @@ export default async (url, callback, mobile = false, blocked = []) => {
         try {
             await callback(page, response);
         } catch (err) {
-            await mkdir('screenshots', { recursive: true });
-            await page.screenshot({ fullPage: true, path: `screenshots/${new Date().toISOString().replace(/[:.]/g, '-')}-${url.replace(/[^a-z0-9_-]/gi, '_').replace(/_+/g, '_')}.png` });
+            try {
+                await mkdir('screenshots', { recursive: true });
+                await page.screenshot({ fullPage: true, path: `screenshots/${new Date().toISOString().replace(/[:.]/g, '-')}-${url.replace(/[^a-z0-9_-]/gi, '_').replace(/_+/g, '_')}.png` });
+            } catch (ssErr) {
+                console.error('Failed to take screenshot', ssErr);
+            }
             throw err;
         }
     } finally {
