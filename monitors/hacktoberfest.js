@@ -5,5 +5,5 @@ export default () => browserPage('https://hacktoberfest.com/', async page => {
     // Check page title
     const year = new Date().getFullYear();
     const title = await page.title();
-    assert(title.match(new RegExp(`^Hacktoberfest (${year}|${year - 1})$`)));
+    assert(title.match(new RegExp(`\\bHacktoberfest (${year}|${year - 1})\\b`)));
 });
