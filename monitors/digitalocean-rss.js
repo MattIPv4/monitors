@@ -26,9 +26,14 @@ const checkRss = async url => {
 }
 
 export default () => Promise.all([
-    checkRss('https://www.digitalocean.com/blog/rss'),
-    checkRss('https://www.digitalocean.com/community/tutorials/feed'),
-    checkRss('https://www.digitalocean.com/community/questions/feed'),
-    checkRss('https://www.digitalocean.com/community/tools/feed'),
-    checkRss('https://www.digitalocean.com/community/tags/development.atom'),
+    // checkRss('https://www.digitalocean.com/blog/rss'),
+    checkRss('https://www.digitalocean.com/rss/blog.atom'),
+    // checkRss('https://www.digitalocean.com/community/tutorials/feed'),
+    checkRss('https://www.digitalocean.com/rss/community/tutorials.atom'),
+    // checkRss('https://www.digitalocean.com/community/questions/feed'),
+    checkRss('https://www.digitalocean.com/rss/community/questions.atom'),
+    // checkRss('https://www.digitalocean.com/community/tools/feed'),
+    checkRss('https://www.digitalocean.com/rss/community/tools.atom'),
+    // checkRss('https://www.digitalocean.com/community/tags/development.atom'),
+    checkRss('https://www.digitalocean.com/rss/community/tags/development.atom'),
 ]);
