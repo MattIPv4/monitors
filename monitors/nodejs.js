@@ -38,13 +38,30 @@ export default () => Promise.all([
         assert.ok(await version.isVisible());
         const text = await version.evaluate(e => e.textContent).then(normalizeWhitespace);
         assert.match(text, /^v\d+\.\d+\.\d+\s*LTS$/);
-    }),
-    browserPage('https://nodejs.org/en/download/current', async page => {
+
+        // A Current release is not always available between release cycles.
+        await page.waitForNetworkIdle();
+        await version.click();
+        await page.waitForSelector('[role="option"]', { visible: true });
+        const options = await page.$$('[role="option"]');
+        const texts = await Promise.all(options.map(option => option.evaluate(e => e.textContent).then(normalizeWhitespace)));
+        const current = options[texts.findIndex(text => /^v\d+\.\d+\.\d+\s*Current$/.test(text))];
+        if (!current) return;
+
+        await Promise.all([
+            page.waitForFunction(() => window.location.href === 'https://nodejs.org/en/download/current'),
+            current.click(),
+        ]);
+        assert.equal(page.url(), 'https://nodejs.org/en/download/current');
+
+        const response = await page.reload({ waitUntil: 'domcontentloaded' });
+        if (!response.ok()) throw new Error(`HTTP request failed: ${response.status()} ${response.statusText()}`);
+
         // Check that a Current version is offered
-        const version = await page.$('xpath/.//main//button[@aria-label[contains(., "Version")]]');
-        assert.notEqual(version, null);
-        assert.ok(await version.isVisible());
-        const text = await version.evaluate(e => e.textContent).then(normalizeWhitespace);
-        assert.match(text, /^v\d+\.\d+\.\d+\s*Current$/);
+        const currentVersion = await page.$('xpath/.//main//button[@aria-label[contains(., "Version")]]');
+        assert.notEqual(currentVersion, null);
+        assert.ok(await currentVersion.isVisible());
+        const currentText = await currentVersion.evaluate(e => e.textContent).then(normalizeWhitespace);
+        assert.match(currentText, /^v\d+\.\d+\.\d+\s*Current$/);
     }),
 ]);
