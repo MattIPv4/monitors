@@ -14,12 +14,12 @@
   "author": "Matt (IPv4) Cowley",
   "license": "Apache-2.0",
   "dependencies": {
-    "@extractus/feed-extractor": "^7.0.9",
-    "cidr-regex": "^4.0.3",
-    "consola": "^3.2.3",
-    "csv-parse": "^5.5.5",
+    "@extractus/feed-extractor": "^8.0.3",
+    "cidr-regex": "^7.1.2",
+    "consola": "^3.4.2",
+    "csv-parse": "^7.0.3",
     "dns-over-tls": "^0.0.9",
     "gunzip-maybe": "^1.4.2",
-    "puppeteer": "^22.5.0"
+    "puppeteer": "^25.16.0"
   }
 }
