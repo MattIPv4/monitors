@@ -14,10 +14,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Use Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -65,11 +65,11 @@ jobs:
 
       - name: Checkout repository
         if: ${{ !contains(fromJson(needs.locate.outputs.disabled), matrix.monitor) }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Use Node.js
         if: ${{ !contains(fromJson(needs.locate.outputs.disabled), matrix.monitor) }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
