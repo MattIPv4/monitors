@@ -57,12 +57,6 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - name: Disable checksum offload
-        if: ${{ !contains(fromJson(needs.locate.outputs.disabled), matrix.monitor) }}
-        # https://github.com/actions/runner-images/issues/1187#issuecomment-686735760
-        # Fixes networking fetch instability
-        run: sudo ethtool -K eth0 tx off rx off
-
       - name: Disable AppArmor
         if: ${{ !contains(fromJson(needs.locate.outputs.disabled), matrix.monitor) }}
         # https://github.com/puppeteer/puppeteer/pull/13196
